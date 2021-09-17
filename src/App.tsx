@@ -1,10 +1,13 @@
 import React from 'react';
 import './App.css';
+import Mainpage from './Mainpage';
 
-function App() {
+const App: React.FunctionComponent = () => {
   return (
     <div className="App">
-        Hello Bookopedia!
+      <div className="verticalCenter">
+        <Mainpage />
+      </div>
     </div>
   );
 }
