@@ -1,11 +1,19 @@
 import React from 'react';
 
-const Homepage: React.FunctionComponent = () => {
+type HomepageProps = {
+  sessionToken: string | null
+}
+
+class Homepage extends React.Component<HomepageProps, {}>{
+  render()  {
     return (
-        <div className="Homepage">
-        Hello Bookopedia Homepage!
-    </div>
-    );
+      <div className="Homepage">
+      Hello Bookopedia Homepage!
+      {this.props.sessionToken}
+  </div>
+  );
+  }
+  
   }
 
 export default Homepage;
