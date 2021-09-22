@@ -1,6 +1,6 @@
-import React from 'react';
-import './App.css';
-import Mainpage from './Mainpage';
+import React from "react";
+import "./App.css";
+import Mainpage from "./Mainpage";
 
 const App: React.FunctionComponent = () => {
   return (
@@ -10,6 +10,6 @@ const App: React.FunctionComponent = () => {
       </div>
     </div>
   );
-}
+};
 
 export default App;

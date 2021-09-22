@@ -1,19 +1,18 @@
-import React from 'react';
+import React from "react";
 
 type HomepageProps = {
-  sessionToken: string | null
-}
+  sessionToken: string | null;
+};
 
-class Homepage extends React.Component<HomepageProps, {}>{
-  render()  {
+class Homepage extends React.Component<HomepageProps, {}> {
+  render() {
     return (
       <div className="Homepage">
-      Hello Bookopedia Homepage!
-      {this.props.sessionToken}
-  </div>
-  );
+        Hello Bookopedia Homepage!
+        {this.props.sessionToken}
+      </div>
+    );
   }
-  
-  }
+}
 
 export default Homepage;
