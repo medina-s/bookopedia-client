@@ -9,12 +9,19 @@ import {
   ModalHeader,
   ModalBody,
 } from "reactstrap";
+import {
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  UncontrolledDropdown,
+} from "reactstrap";
 
 type ReviewUpdateProps = {
   bookname: string;
   bookauthor: string;
   reviewtext: string;
-  rating: string;
+  rating: string | null;
   reviewid: string;
   toggle: (val: boolean) => void;
   sessionToken: string | null;
@@ -23,7 +30,7 @@ type ReviewUpdateProps = {
 
 type ReviewUpdateState = {
   reviewtext: string;
-  rating: string;
+  rating: string | null;
 };
 
 class ReviewUpdate extends React.Component<
@@ -61,7 +68,7 @@ class ReviewUpdate extends React.Component<
         console.log(logData);
         this.props.fetchAllReviews();
         this.props.toggle(false);
-        alert("Review has been successfully updated!");
+        alert(logData.message);
       });
   }
 
@@ -93,17 +100,30 @@ class ReviewUpdate extends React.Component<
               />
             </FormGroup>
             <FormGroup>
-              <Label htmlFor="rating">Rating</Label>
-              <Input
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  this.setState({
-                    rating: e.target.value,
-                  })
-                }
-                name="rating"
-                value={this.state.rating}
-              />
-            </FormGroup>
+                <Label htmlFor="rating">Rating</Label>
+                <UncontrolledDropdown>
+                  <DropdownToggle caret><>{this.state.rating}</></DropdownToggle>
+                  <DropdownMenu >
+                    <DropdownItem header>Rating</DropdownItem>
+                    
+                    <DropdownItem dropDownValue="1" onClick={(e) => {
+                    this.setState({ rating: e.currentTarget.getAttribute("dropDownValue") })
+                  }}>1</DropdownItem>
+                    <DropdownItem dropDownValue="2" onClick={(e) => {
+                    this.setState({ rating: e.currentTarget.getAttribute("dropDownValue") })
+                  }}>2</DropdownItem>
+                    <DropdownItem dropDownValue="3" onClick={(e) => {
+                    this.setState({ rating: e.currentTarget.getAttribute("dropDownValue") })
+                  }}>3</DropdownItem>
+                    <DropdownItem dropDownValue="4" onClick={(e) => {
+                    this.setState({ rating: e.currentTarget.getAttribute("dropDownValue") })
+                  }}>4</DropdownItem>
+                    <DropdownItem dropDownValue="5" onClick={(e) => {
+                    this.setState({ rating: e.currentTarget.getAttribute("dropDownValue") })
+                  }}>5</DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              </FormGroup>
             <Button type="submit">Update Review</Button>
           </Form>
         </ModalBody>

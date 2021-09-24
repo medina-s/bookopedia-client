@@ -75,7 +75,10 @@ class MyReviewIndex extends React.Component<
       }),
     })
       .then((response) => response.json())
-      .then(() => this.fetchAllreviews());
+      .then((logData) => {
+        console.log(logData);
+      this.fetchAllreviews();
+      alert(logData.message);});
   }
 
   render() {

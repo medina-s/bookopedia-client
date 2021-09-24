@@ -24,6 +24,11 @@ class Login extends React.Component<LoginProps, LoginState> {
   handleSubmit(e: React.FormEvent) {
     console.log("HANDLE SUBMIT EVENT");
 
+    if (this.state.email === "" || this.state.password === "") {
+     
+      alert("All fields are required!")
+     } else {
+
     e.preventDefault();
     fetch("http://localhost:3000/auth/login", {
       method: "POST",
@@ -37,7 +42,10 @@ class Login extends React.Component<LoginProps, LoginState> {
       .then((response) => response.json())
       .then((data) => {
         this.props.updateToken(data.sessionToken);
+        console.log(data);
+        //alert(data.message);
       });
+    }
   }
 
   render() {

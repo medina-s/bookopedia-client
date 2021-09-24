@@ -82,7 +82,7 @@ class Mainpage extends React.Component<MainpageProps, MainpageState> {
                 <MyReviewIndex sessionToken={this.state.sessionToken} />
               </Route>
               <Route exact path="/myreadinglist">
-                <MyReadingListIndex />
+                <MyReadingListIndex sessionToken={this.state.sessionToken}/>
               </Route>
             </Switch>
           </Router>

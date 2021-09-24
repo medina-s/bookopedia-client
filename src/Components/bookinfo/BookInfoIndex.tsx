@@ -81,11 +81,30 @@ class BookInfoIndex extends React.Component<
         )
           .then((response) => response.json())
           .then((data) => {
+            console.log("ALL DATA!");
+        console.log(data);
             this.setState({
               allreviews: data,
             });
+            console.log("ALL REVIEWS");
+        console.log(this.state.allreviews);
           });
-      });
+      }) 
+      .catch((err) => {
+        console.log("Exception Occurred")
+        console.log(err);
+        this.setState({
+          bookname: "Book Not Found!",
+          booksubtitle: "",
+          bookauthor: "",
+          bookdesc: "",
+          bookimgurl: "",
+          bookpublisher: "",
+          bookpublishdate: "",
+          toggle: true,
+        });
+
+      })
   }
 
   fetchReviewDB() {
@@ -104,9 +123,13 @@ class BookInfoIndex extends React.Component<
     )
       .then((response) => response.json())
       .then((data) => {
+        console.log("ALL DATA!");
+    console.log(data);
         this.setState({
           allreviews: data,
         });
+        console.log("ALL REVIEWS");
+    console.log(this.state.allreviews);
       });
     console.log("ALL REVIEWS");
     console.log(this.state.allreviews);
@@ -117,7 +140,11 @@ class BookInfoIndex extends React.Component<
 
     e.preventDefault();
 
-    this.fetchBooksAPI();
+    if (this.state.booknameinput === "" || this.state.bookauthorinput === "") {
+      alert("Cannot submit empty form!")
+    } else {
+      this.fetchBooksAPI();
+    }
 
     //this.fetchReviewDB();
   }
@@ -150,14 +177,15 @@ class BookInfoIndex extends React.Component<
           <Button type="submit">Search</Button>
         </Form>
         {<img src={this.state.bookimgurl} alt="" />}
-        {[this.state.bookauthor, this.state.bookname, this.state.bookdesc]}
-        All reviews:
+        {[this.state.bookname, this.state.booksubtitle, this.state.bookauthor, this.state.bookdesc]}
+        {[this.state.bookpublisher, this.state.bookpublishdate]}
+        
         <ReviewIndex
           allreviews={this.state.allreviews}
           toggle={this.state.toggle}
           sessionToken={this.props.sessionToken}
           bookname={this.state.bookname}
-          bookauthor={this.state.bookauthor}
+          bookauthor={this.state.bookauthor} fetchReviewsDB={this.fetchReviewDB}
         />
       </div>
     );

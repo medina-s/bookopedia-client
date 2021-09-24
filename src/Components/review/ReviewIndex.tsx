@@ -1,11 +1,13 @@
 import React from "react";
-import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import {Alert, Form, FormGroup, Label, Input, Button } from "reactstrap";
 import {
   Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  UncontrolledDropdown,
 } from "reactstrap";
+import ReadingListIndex from '../readinglist/ReadingListIndex'
 
 type ReviewIndexProps = {
   allreviews: any[];
@@ -13,6 +15,7 @@ type ReviewIndexProps = {
   sessionToken: string | null;
   bookname: string;
   bookauthor: string;
+  fetchReviewsDB: () => void;
 };
 
 type ReviewIndexState = {
@@ -20,7 +23,7 @@ type ReviewIndexState = {
   booktitle: string;
   bookauthor: string;
   reviewtext: string;
-  rating: string;
+  rating: string | null;
 };
 
 class ReviewIndex extends React.Component<ReviewIndexProps, ReviewIndexState> {
@@ -31,14 +34,18 @@ class ReviewIndex extends React.Component<ReviewIndexProps, ReviewIndexState> {
       booktitle: "",
       bookauthor: "",
       reviewtext: "",
-      rating: "",
+      rating: null,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    fetch(`http://localhost:3000/review/create`, {
+    if (this.state.reviewtext === "" || this.state.rating === null) {
+     
+     alert("Cannot submit empty form!")
+    } else {
+      fetch(`http://localhost:3000/review/create`, {
       method: "POST",
       body: JSON.stringify({
         review: {
@@ -56,8 +63,12 @@ class ReviewIndex extends React.Component<ReviewIndexProps, ReviewIndexState> {
       .then((res) => res.json())
       .then((logData) => {
         console.log(logData);
-        alert("Review has been successfully created!");
+        this.props.fetchReviewsDB();
+        alert(logData.message);
       });
+    }
+
+    
   }
 
   render() {
@@ -75,6 +86,7 @@ class ReviewIndex extends React.Component<ReviewIndexProps, ReviewIndexState> {
       <div className="ReviewIndex">
         {protectedView ? (
           <>
+          <ReadingListIndex booktitle={this.props.bookname} bookauthor={this.props.bookauthor} sessionToken={this.props.sessionToken} />
             <Form onSubmit={this.handleSubmit}>
               <FormGroup>
                 <Label htmlFor="review">Review</Label>
@@ -89,31 +101,32 @@ class ReviewIndex extends React.Component<ReviewIndexProps, ReviewIndexState> {
               </FormGroup>
               <FormGroup>
                 <Label htmlFor="rating">Rating</Label>
-                {/* <Dropdown isOpen={} toggle={onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    this.setState({ rating: e.target.value })}>
-                  <DropdownToggle caret>Dropdown</DropdownToggle>
-                  <DropdownMenu>
-                    <DropdownItem header>Header</DropdownItem>
-                    <DropdownItem>Some Action</DropdownItem>
-                    <DropdownItem text>Dropdown Item Text</DropdownItem>
-                    <DropdownItem disabled>Action (disabled)</DropdownItem>
-                    <DropdownItem divider />
-                    <DropdownItem>Foo Action</DropdownItem>
-                    <DropdownItem>Bar Action</DropdownItem>
-                    <DropdownItem>Quo Action</DropdownItem>
+                <UncontrolledDropdown>
+                  <DropdownToggle caret><>{this.state.rating}</></DropdownToggle>
+                  <DropdownMenu >
+                    <DropdownItem header>Rating</DropdownItem>
+                    
+                    <DropdownItem dropDownValue="1" onClick={(e) => {
+                    this.setState({ rating: e.currentTarget.getAttribute("dropDownValue") })
+                  }}>1</DropdownItem>
+                    <DropdownItem dropDownValue="2" onClick={(e) => {
+                    this.setState({ rating: e.currentTarget.getAttribute("dropDownValue") })
+                  }}>2</DropdownItem>
+                    <DropdownItem dropDownValue="3" onClick={(e) => {
+                    this.setState({ rating: e.currentTarget.getAttribute("dropDownValue") })
+                  }}>3</DropdownItem>
+                    <DropdownItem dropDownValue="4" onClick={(e) => {
+                    this.setState({ rating: e.currentTarget.getAttribute("dropDownValue") })
+                  }}>4</DropdownItem>
+                    <DropdownItem dropDownValue="5" onClick={(e) => {
+                    this.setState({ rating: e.currentTarget.getAttribute("dropDownValue") })
+                  }}>5</DropdownItem>
                   </DropdownMenu>
-                </Dropdown> */}
-                <Input
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    this.setState({ rating: e.target.value })
-                  }
-                  name="rating"
-                  value={this.state.rating}
-                />
+                </UncontrolledDropdown>
               </FormGroup>
               <Button type="submit">Add Review</Button>
             </Form>
-
+            All reviews:
             {this.props.allreviews.map((review) => {
               return (
                 <tr>
@@ -128,6 +141,7 @@ class ReviewIndex extends React.Component<ReviewIndexProps, ReviewIndexState> {
           </>
         ) : (
           <>
+          All reviews:
             {this.props.allreviews.map((review) => {
               return (
                 <tr>

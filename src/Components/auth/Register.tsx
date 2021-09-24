@@ -31,26 +31,35 @@ class Register extends React.Component<RegisterProps, RegisterState> {
   handleSubmit(e: React.FormEvent) {
     console.log("HANDLE SUBMIT EVENT");
 
-    e.preventDefault();
-    fetch("http://localhost:3000/auth/register", {
-      method: "POST",
-      body: JSON.stringify({
-        user: {
-          firstname: this.state.firstname,
-          lastname: this.state.lastname,
-          username: this.state.username,
-          email: this.state.email,
-          password: this.state.password,
-          role: "general",
-        },
-      }),
-      headers: new Headers({
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((response) => response.json())
+    if (this.state.email === "" || this.state.password === "" || this.state.firstname === "" || this.state.lastname === "" || this.state.username === "") {
+     
+      alert("All fields are required!")
+     } else {e.preventDefault();
+      fetch("http://localhost:3000/auth/register", {
+        method: "POST",
+        body: JSON.stringify({
+          user: {
+            firstname: this.state.firstname,
+            lastname: this.state.lastname,
+            username: this.state.username,
+            email: this.state.email,
+            password: this.state.password,
+            role: "general",
+          },
+        }),
+        headers: new Headers({
+          "Content-Type": "application/json",
+        }),
+      })
+        .then((response) => response.json())
+  
+        .then((data) => {
+          this.props.updateToken(data.sessionToken);
+          console.log(data);
+          alert(data.message);
+        });}
 
-      .then((data) => this.props.updateToken(data.sessionToken));
+    
   }
 
   render() {
