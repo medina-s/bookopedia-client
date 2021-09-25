@@ -1,6 +1,13 @@
 import React from "react";
-import { Button, Table } from "reactstrap";
 import ReviewUpdate from "./ReviewUpdate";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button'
 
 type MyReviewIndexState = {
   allreviews: any[];
@@ -93,26 +100,35 @@ class MyReviewIndex extends React.Component<
         My Reviews
         {protectedView ? (
           <>
-            <Table striped>
-              <thead>
-                <tr>
-                  <th>Book Title</th>
-                  <th>Book Author</th>
-                  <th>Review</th>
-                  <th>Rating</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Book Title</TableCell>
+            <TableCell>Book Author</TableCell>
+            <TableCell>Review</TableCell>
+            <TableCell>Rating</TableCell>
+            <TableCell></TableCell>
+          </TableRow>
+        </TableHead>
+              
+        <TableBody>
                 {this.state.allreviews.map((review, index) => {
                   return (
-                    <tr key="index">
-                      <td>{review.booktitle}</td>
-                      <td>{review.bookauthor}</td>
-                      <td>{review.reviewtext}</td>
-                      <td>{review.rating}</td>
-                      <td>
-                        <Button
+                    <TableRow
+              key={index}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {review.booktitle}
+              </TableCell>
+              <TableCell>{review.bookauthor}</TableCell>
+              <TableCell>{review.review}</TableCell>
+              <TableCell>{review.rating}</TableCell>
+                      
+                      <TableCell>
+                        <div>
+                        <Button variant="outlined"
                           type="submit"
                           color="warning"
                           onClick={() => {
@@ -121,16 +137,18 @@ class MyReviewIndex extends React.Component<
                         >
                           Edit Review
                         </Button>
-                        <Button
+                        {" "}
+                        <Button variant="outlined"
                           type="submit"
-                          color="danger"
+                          color="error"
                           onClick={() => {
                             this.deleteReview(review.id);
                           }}
                         >
                           Delete Review
                         </Button>
-                      </td>{" "}
+                        </div>
+                      </TableCell>
                       {this.state.toggle ? (
                         <ReviewUpdate
                           bookname={this.state.allreviews[this.state.indexstate].booktitle}
@@ -145,11 +163,11 @@ class MyReviewIndex extends React.Component<
                       ) : (
                         <></>
                       )}
-                    </tr>
+                    </TableRow>
                   );
                 })}{" "}
-              </tbody>
-            </Table>
+              </TableBody>
+            </Table></TableContainer>
           </>
         ) : (
           <></>

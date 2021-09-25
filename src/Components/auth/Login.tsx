@@ -58,7 +58,7 @@ class Login extends React.Component<LoginProps, LoginState> {
   render() {
     return (
       
-        <Box component='form' noValidate onSubmit={this.handleSubmit} sx={{
+        <Box component='form' onSubmit={this.handleSubmit} sx={{
         '& .MuiTextField-root': { m: 1, width: '25ch' },
       }}>
         <div>
@@ -70,7 +70,7 @@ class Login extends React.Component<LoginProps, LoginState> {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 this.setState({ email: e.target.value })
               }
-              label="email"
+              label="E-mail"
               value={this.state.email}
             />
             </div>
@@ -79,7 +79,7 @@ class Login extends React.Component<LoginProps, LoginState> {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 this.setState({ password: e.target.value })
               }
-              label="password"
+              label="Password"
               value={this.state.password}
             />
             </div>

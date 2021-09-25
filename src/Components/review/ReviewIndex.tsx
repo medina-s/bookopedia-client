@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { Form, FormGroup, Label, Input } from "reactstrap";
 import {
   DropdownToggle,
   DropdownMenu,
@@ -8,6 +8,15 @@ import {
   Table
 } from "reactstrap";
 import ReadingListIndex from "../readinglist/ReadingListIndex";
+import Button from '@mui/material/Button'
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+
+
 
 type ReviewIndexProps = {
   allreviews: any[];
@@ -34,7 +43,7 @@ class ReviewIndex extends React.Component<ReviewIndexProps, ReviewIndexState> {
       booktitle: "",
       bookauthor: "",
       reviewtext: "",
-      rating: null,
+      rating: "",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -92,82 +101,46 @@ class ReviewIndex extends React.Component<ReviewIndexProps, ReviewIndexState> {
               bookauthor={this.props.bookauthor}
               sessionToken={this.props.sessionToken}
             />
-            <Form onSubmit={this.handleSubmit}>
-              <FormGroup>
-                <Label htmlFor="review">Review</Label>
-                <Input
-                  type="textarea"
+            <Box component='form' onSubmit={this.handleSubmit} sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}>
+
+           <div>
+                <TextField variant="filled" required
+                  multiline
+                  maxRows={4}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     this.setState({ reviewtext: e.target.value })
                   }
-                  name="reviewtext"
+                  label="Review"
                   value={this.state.reviewtext}
                 />
-              </FormGroup>
-              <FormGroup>
-                <Label htmlFor="rating">Rating</Label>
-                <UncontrolledDropdown>
-                  <DropdownToggle caret>
-                    <>{this.state.rating}</>
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    <DropdownItem header>Rating</DropdownItem>
-
-                    <DropdownItem
-                      dropDownValue="1"
-                      onClick={(e) => {
-                        this.setState({
-                          rating: e.currentTarget.getAttribute("dropDownValue"),
-                        });
-                      }}
-                    >
-                      1
-                    </DropdownItem>
-                    <DropdownItem
-                      dropDownValue="2"
-                      onClick={(e) => {
-                        this.setState({
-                          rating: e.currentTarget.getAttribute("dropDownValue"),
-                        });
-                      }}
-                    >
-                      2
-                    </DropdownItem>
-                    <DropdownItem
-                      dropDownValue="3"
-                      onClick={(e) => {
-                        this.setState({
-                          rating: e.currentTarget.getAttribute("dropDownValue"),
-                        });
-                      }}
-                    >
-                      3
-                    </DropdownItem>
-                    <DropdownItem
-                      dropDownValue="4"
-                      onClick={(e) => {
-                        this.setState({
-                          rating: e.currentTarget.getAttribute("dropDownValue"),
-                        });
-                      }}
-                    >
-                      4
-                    </DropdownItem>
-                    <DropdownItem
-                      dropDownValue="5"
-                      onClick={(e) => {
-                        this.setState({
-                          rating: e.currentTarget.getAttribute("dropDownValue"),
-                        });
-                      }}
-                    >
-                      5
-                    </DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-              </FormGroup>
-              <Button type="submit">Add Review</Button>
-            </Form>
+                </div>
+                <div>
+                <FormControl variant="filled" required sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="rating-standard-label">Rating</InputLabel>
+        <Select  autoWidth displayEmpty
+        labelId="rating-standard-label"
+          value={this.state.rating}
+          onChange={(e) => {
+            this.setState({
+              rating: e.target.value,
+            });
+          }}
+        >
+          <MenuItem value={"1"}>1</MenuItem>
+          <MenuItem value={"2"}>2</MenuItem>
+          <MenuItem value={"3"}>3</MenuItem>
+          <MenuItem value={"4"}>4</MenuItem>
+          <MenuItem value={"5"}>5</MenuItem>
+        </Select>
+        </FormControl>
+                </div>
+                
+              <div>
+              <Button  variant="contained" type="submit">Add Review</Button>
+              </div>
+            </Box>
             All reviews:
             <Table striped>
             <thead>

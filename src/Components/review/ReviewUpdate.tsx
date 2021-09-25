@@ -4,7 +4,6 @@ import {
   FormGroup,
   Label,
   Input,
-  Button,
   Modal,
   ModalHeader,
   ModalBody,
@@ -15,6 +14,13 @@ import {
   DropdownItem,
   UncontrolledDropdown,
 } from "reactstrap";
+import Button from '@mui/material/Button'
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 
 type ReviewUpdateProps = {
   bookname: string;
@@ -80,92 +86,55 @@ class ReviewUpdate extends React.Component<
       <Modal isOpen={true}>
         <ModalHeader>Edit Review</ModalHeader>
         <ModalBody>
-          <Form onSubmit={this.editReview}>
-            <FormGroup check disabled>
-              <Label htmlFor="review">Book Title</Label>
-              <Input name="bookname" value={this.props.bookname} disabled />
-            </FormGroup>
-            <FormGroup check disabled>
-              <Label htmlFor="review">Book Author</Label>
-              <Input name="bookauthor" value={this.props.bookauthor} disabled />
-            </FormGroup>
-            <FormGroup>
-              <Label htmlFor="review">Review</Label>
-              <Input
-                type="textarea"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  this.setState({
-                    reviewtext: e.target.value,
-                  })
-                }
-                name="reviewtext"
-                value={this.state.reviewtext}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label htmlFor="rating">Rating</Label>
-              <UncontrolledDropdown>
-                <DropdownToggle caret>
-                  <>{this.state.rating}</>
-                </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem header>Rating</DropdownItem>
-
-                  <DropdownItem
-                    dropDownValue="1"
-                    onClick={(e) => {
-                      this.setState({
-                        rating: e.currentTarget.getAttribute("dropDownValue"),
-                      });
-                    }}
-                  >
-                    1
-                  </DropdownItem>
-                  <DropdownItem
-                    dropDownValue="2"
-                    onClick={(e) => {
-                      this.setState({
-                        rating: e.currentTarget.getAttribute("dropDownValue"),
-                      });
-                    }}
-                  >
-                    2
-                  </DropdownItem>
-                  <DropdownItem
-                    dropDownValue="3"
-                    onClick={(e) => {
-                      this.setState({
-                        rating: e.currentTarget.getAttribute("dropDownValue"),
-                      });
-                    }}
-                  >
-                    3
-                  </DropdownItem>
-                  <DropdownItem
-                    dropDownValue="4"
-                    onClick={(e) => {
-                      this.setState({
-                        rating: e.currentTarget.getAttribute("dropDownValue"),
-                      });
-                    }}
-                  >
-                    4
-                  </DropdownItem>
-                  <DropdownItem
-                    dropDownValue="5"
-                    onClick={(e) => {
-                      this.setState({
-                        rating: e.currentTarget.getAttribute("dropDownValue"),
-                      });
-                    }}
-                  >
-                    5
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-            </FormGroup>
-            <Button type="submit">Update Review</Button>
-          </Form>
+        <Box component='form' onSubmit={this.editReview} sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}>
+          
+            <div>
+            <TextField variant="standard"
+                  disabled
+                  label="Book Title"
+                  value={this.props.bookname}
+                />
+              <TextField variant="standard"
+                  disabled
+                  label="Book Author"
+                  value={this.props.bookauthor}
+                />
+                </div>
+                <div>
+            <TextField variant="standard" required
+                  multiline
+                  maxRows={4}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    this.setState({ reviewtext: e.target.value })
+                  }
+                  label="Review"
+                  value={this.state.reviewtext}
+                />
+          <FormControl variant="standard" required sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="rating-standard-label">Rating</InputLabel>
+                <Select  autoWidth displayEmpty
+                labelId="rating-standard-label"
+                  value={this.state.rating}
+                  onChange={(e) => {
+                    this.setState({
+                      rating: e.target.value,
+                    });
+                  }}
+                >
+                  <MenuItem value={"1"}>1</MenuItem>
+                  <MenuItem value={"2"}>2</MenuItem>
+                  <MenuItem value={"3"}>3</MenuItem>
+                  <MenuItem value={"4"}>4</MenuItem>
+                  <MenuItem value={"5"}>5</MenuItem>
+                </Select>
+                </FormControl>
+            </div>
+            <div>
+            <Button variant="outlined" type="submit">Update Review</Button>
+            </div>
+          </Box>
         </ModalBody>
       </Modal>
     );

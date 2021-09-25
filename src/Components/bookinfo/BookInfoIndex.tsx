@@ -1,6 +1,9 @@
 import React from "react";
-import { Form, FormGroup, Label, Input, Button, Table } from "reactstrap";
+import { Form, FormGroup, Label, Input, Table } from "reactstrap";
 import ReviewIndex from "../review/ReviewIndex";
+import Button from '@mui/material/Button'
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
 type BookInfoIndexState = {
   booknameinput: string;
@@ -143,29 +146,29 @@ class BookInfoIndex extends React.Component<
     return (
       <div className="BookInfoIndex">
         <h1>Book Search</h1>
-        <Form onSubmit={this.handleSubmit}>
-          <FormGroup>
-            <Label htmlFor="bookname">Book Name</Label>
-            <Input
+        <Box component='form' onSubmit={this.handleSubmit} sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}>
+        <div>
+            <TextField variant="filled" required
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 this.setState({ booknameinput: e.target.value })
               }
-              name="bookname"
+              label="Book Name"
               value={this.state.booknameinput}
             />
-          </FormGroup>
-          <FormGroup>
-            <Label htmlFor="bookauthor">Book Author</Label>
-            <Input
+            <TextField variant="filled" required
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 this.setState({ bookauthorinput: e.target.value })
               }
-              name="bookauthor"
+              label="Book Author"
               value={this.state.bookauthorinput}
             />
-          </FormGroup>
-          <Button type="submit">Search</Button>
-        </Form>
+            </div>
+            <div>
+          <Button variant="contained" type="submit">Search</Button>
+          </div>
+        </Box>
         {<img src={this.state.bookimgurl} alt="" />}
         <Table striped>
           <thead>

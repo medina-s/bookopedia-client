@@ -82,8 +82,7 @@ class Register extends React.Component<RegisterProps, RegisterState> {
   render() {
     return (
       
-        
-        <Box component='form' noValidate onSubmit={this.handleSubmit} sx={{
+        <Box component='form' onSubmit={this.handleSubmit} sx={{
         '& .MuiTextField-root': { m: 1, width: '25ch' },
       }}>
         <div><h1>Register</h1>
@@ -93,14 +92,14 @@ class Register extends React.Component<RegisterProps, RegisterState> {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 this.setState({ firstname: e.target.value })
               }
-              label="firstname"
+              label="First Name"
               value={this.state.firstname}
             />
             <TextField variant="filled" required
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 this.setState({ lastname: e.target.value })
               }
-              label="lastname"
+              label="Last Name"
               value={this.state.lastname}
             />
             </div>
@@ -109,14 +108,14 @@ class Register extends React.Component<RegisterProps, RegisterState> {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 this.setState({ username: e.target.value })
               }
-              label="username"
+              label="Username"
               value={this.state.username}
             />
             <TextField variant="filled" required
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 this.setState({ email: e.target.value })
               }
-              label="email"
+              label="E-mail"
               value={this.state.email}
             />
             </div>
@@ -125,7 +124,7 @@ class Register extends React.Component<RegisterProps, RegisterState> {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 this.setState({ password: e.target.value })
               }
-              label="password"
+              label="Password"
               value={this.state.password}
             />
             </div>

@@ -4,7 +4,6 @@ import {
   FormGroup,
   Label,
   Input,
-  Button,
   Modal,
   ModalHeader,
   ModalBody,
@@ -15,6 +14,13 @@ import {
   DropdownItem,
   UncontrolledDropdown,
 } from "reactstrap";
+import Button from '@mui/material/Button'
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 
 type ReadingListItemUpdateProps = {
   bookname: string;
@@ -76,59 +82,41 @@ class ReadingListItemUpdate extends React.Component<
       <Modal isOpen={true}>
         <ModalHeader>Edit Book Status</ModalHeader>
         <ModalBody>
-          <Form onSubmit={this.editItem}>
-            <FormGroup check disabled>
-              <Label htmlFor="readinglist">Book Title</Label>
-              <Input name="bookname" value={this.props.bookname} disabled />
-            </FormGroup>
-            <FormGroup check disabled>
-              <Label htmlFor="readinglist">Book Author</Label>
-              <Input name="bookauthor" value={this.props.bookauthor} disabled />
-            </FormGroup>
-            <FormGroup>
-              <Label htmlFor="readinglist">Status</Label>
-              <UncontrolledDropdown>
-                <DropdownToggle caret>
-                  <>{this.state.status}</>
-                </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem header>Status</DropdownItem>
-
-                  <DropdownItem
-                    dropDownValue="To Read"
-                    onClick={(e) => {
-                      this.setState({
-                        status: e.currentTarget.getAttribute("dropDownValue"),
-                      });
-                    }}
-                  >
-                    To Read
-                  </DropdownItem>
-                  <DropdownItem
-                    dropDownValue="Reading"
-                    onClick={(e) => {
-                      this.setState({
-                        status: e.currentTarget.getAttribute("dropDownValue"),
-                      });
-                    }}
-                  >
-                    Reading
-                  </DropdownItem>
-                  <DropdownItem
-                    dropDownValue="Completed"
-                    onClick={(e) => {
-                      this.setState({
-                        status: e.currentTarget.getAttribute("dropDownValue"),
-                      });
-                    }}
-                  >
-                    Completed
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-            </FormGroup>
-            <Button type="submit">Update Status</Button>
-          </Form>
+        <Box component='form' onSubmit={this.editItem} sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}>
+        <div>
+          <TextField variant="standard"
+                  disabled
+                  label="Book Title"
+                  value={this.props.bookname}
+                />
+            <TextField variant="standard"
+                  disabled
+                  label="Book Author"
+                  value={this.props.bookauthor}
+                />
+            <FormControl variant="standard" required sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="status-standard-label">Status</InputLabel>
+                <Select  autoWidth displayEmpty
+                labelId="status-standard-label"
+                  value={this.state.status}
+                  onChange={(e) => {
+                    this.setState({
+                      status: e.target.value,
+                    });
+                  }}
+                >
+                  <MenuItem value={"To Read"}>To Read</MenuItem>
+                  <MenuItem value={"Reading"}>Reading</MenuItem>
+                  <MenuItem value={"Completed"}>Completed</MenuItem>
+                </Select>
+                </FormControl>
+                </div>
+            <div>
+            <Button variant="outlined" type="submit">Update Status</Button>
+            </div>
+          </Box>
         </ModalBody>
       </Modal>
     );

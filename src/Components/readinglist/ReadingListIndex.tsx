@@ -1,5 +1,7 @@
 import React from "react";
-import { Button } from "reactstrap";
+import Button from '@mui/material/Button'
+import Box from '@mui/material/Box';
+
 
 type ReadingListProps = {
   sessionToken: string | null;
@@ -48,8 +50,10 @@ class ReadingListIndex extends React.Component<
 
   render() {
     return (
-      <>
-        <Button
+      
+      <Box >
+        <div>
+        <Button variant="contained" color="warning"
           type="submit"
           onClick={() => {
             this.addToReadingList();
@@ -57,7 +61,8 @@ class ReadingListIndex extends React.Component<
         >
           Add to my reading list
         </Button>
-      </>
+        </div>
+      </Box>
     );
   }
 }

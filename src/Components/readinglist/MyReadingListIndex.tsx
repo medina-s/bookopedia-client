@@ -1,6 +1,14 @@
 import React from "react";
-import { Button, Table } from "reactstrap";
 import ReadingListItemUpdate from "./ReadingListItemUpdate";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button'
+
 
 type MyReadingListState = {
   allitems: any[];
@@ -94,25 +102,35 @@ class MyReadingListIndex extends React.Component<
         My Reading List
         {protectedView ? (
           <>
-            <Table striped>
-              <thead>
-                <tr>
-                  <th>Book Title</th>
-                  <th>Book Author</th>
-                  <th>Status</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
+            <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Book Title</TableCell>
+            <TableCell>Book Author</TableCell>
+            <TableCell>Status</TableCell>
+            <TableCell></TableCell>
+          </TableRow>
+        </TableHead>
+              
+        <TableBody>
                 {this.state.allitems.map((item, index) => {
                   return (
-                    <tr key={index}>
-                      
-                      <td>{item.booktitle}</td>
-                      <td>{item.bookauthor}</td>
-                      <td>{item.status}</td>
-                      <td>
+                    <TableRow
+              key={index}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+                    
+                    <TableCell component="th" scope="row">
+                {item.booktitle}
+              </TableCell>
+              <TableCell>{item.bookauthor}</TableCell>
+              <TableCell>{item.status}</TableCell>
+              
+                      <TableCell>
+                        <div>
                         <Button
+                        variant="outlined"
                           type="submit"
                           color="warning"
                           onClick={() => {
@@ -121,16 +139,19 @@ class MyReadingListIndex extends React.Component<
                         >
                           Edit Status
                         </Button>
+                        {" "}
                         <Button
+                        variant="outlined"
                           type="submit"
-                          color="danger"
+                          color="error"
                           onClick={() => {
                             this.deleteItem(item.id);
                           }}
                         >
                           Delete Book
                         </Button>
-                      </td>
+                        </div>
+                      </TableCell>
                       {this.state.toggle ? (
                         
                         <ReadingListItemUpdate
@@ -145,11 +166,12 @@ class MyReadingListIndex extends React.Component<
                       ) : (
                         <></>
                       )}
-                    </tr>
+                    </TableRow>
                   );
-                })}{" "}
-              </tbody>
-            </Table>
+                })}
+              </TableBody>
+              </Table>
+            </TableContainer>
           </>
         ) : (
           <></>
