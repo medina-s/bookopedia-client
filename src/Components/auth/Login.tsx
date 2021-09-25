@@ -1,5 +1,8 @@
 import React from "react";
-import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { Form, FormGroup, Label, Input } from "reactstrap";
+import Button from '@mui/material/Button'
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
 type LoginProps = {
   updateToken: (newToken: string, role: string, firstname: string) => void;
@@ -54,32 +57,36 @@ class Login extends React.Component<LoginProps, LoginState> {
 
   render() {
     return (
-      <div className="Login">
+      
+        <Box component='form' noValidate onSubmit={this.handleSubmit} sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}>
+        <div>
         <h1>Login</h1>
-        <Form onSubmit={this.handleSubmit}>
-          <FormGroup>
-            <Label htmlFor="email">Email</Label>
-            <Input
+        </div>
+            <div>
+            
+            <TextField variant="filled" required
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 this.setState({ email: e.target.value })
               }
-              name="email"
+              label="email"
               value={this.state.email}
             />
-          </FormGroup>
-          <FormGroup>
-            <Label htmlFor="password">Password</Label>
-            <Input
+            </div>
+            <div>
+            <TextField variant="filled" required
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 this.setState({ password: e.target.value })
               }
-              name="password"
+              label="password"
               value={this.state.password}
             />
-          </FormGroup>
-          <Button type="submit">Login</Button>
-        </Form>
-      </div>
+            </div>
+            <div>
+          <Button variant="contained" type="submit">Login</Button>
+          </div>
+        </Box>
     );
   }
 }

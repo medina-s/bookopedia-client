@@ -1,6 +1,8 @@
 import React from "react";
 import Login from "./Login";
 import Register from "./Register";
+import Box from '@mui/material/Box';
+
 
 type AuthIndexProps = {
   updateToken: (newToken: string, role: string, firstname: string) => void;
@@ -10,9 +12,11 @@ class AuthIndex extends React.Component<AuthIndexProps, {}> {
   render() {
     return (
       <div className="AuthIndex">
+        
         <Register updateToken={this.props.updateToken} />
-        <hr />
+        <hr/>
         <Login updateToken={this.props.updateToken} />
+        
       </div>
     );
   }

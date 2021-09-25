@@ -1,5 +1,11 @@
 import React from "react";
-import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { Form, FormGroup, Label, Input } from "reactstrap";
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import Button from '@mui/material/Button'
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+
 
 type RegisterProps = {
   updateToken: (newToken: string, role: string, firstname: string) => void;
@@ -75,62 +81,58 @@ class Register extends React.Component<RegisterProps, RegisterState> {
 
   render() {
     return (
-      <div className="Register">
-        <h1>Register</h1>
-        <Form onSubmit={this.handleSubmit}>
-          <FormGroup>
-            <Label htmlFor="firstname">First Name</Label>
-            <Input
+      
+        
+        <Box component='form' noValidate onSubmit={this.handleSubmit} sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}>
+        <div><h1>Register</h1>
+          </div>
+            <div>
+            <TextField variant="filled" required 
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 this.setState({ firstname: e.target.value })
               }
-              name="firstname"
+              label="firstname"
               value={this.state.firstname}
             />
-          </FormGroup>
-          <FormGroup>
-            <Label htmlFor="lastname">Last Name</Label>
-            <Input
+            <TextField variant="filled" required
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 this.setState({ lastname: e.target.value })
               }
-              name="lastname"
+              label="lastname"
               value={this.state.lastname}
             />
-          </FormGroup>
-          <FormGroup>
-            <Label htmlFor="username">Username</Label>
-            <Input
+            </div>
+            <div>
+            <TextField variant="filled" required
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 this.setState({ username: e.target.value })
               }
-              name="username"
+              label="username"
               value={this.state.username}
             />
-          </FormGroup>
-          <FormGroup>
-            <Label htmlFor="email">Email</Label>
-            <Input
+            <TextField variant="filled" required
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 this.setState({ email: e.target.value })
               }
-              name="email"
+              label="email"
               value={this.state.email}
             />
-          </FormGroup>
-          <FormGroup>
-            <Label htmlFor="password">Password</Label>
-            <Input
+            </div>
+            <div>
+            <TextField variant="filled" required
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 this.setState({ password: e.target.value })
               }
-              name="password"
+              label="password"
               value={this.state.password}
             />
-          </FormGroup>
-          <Button type="submit">Register</Button>
-        </Form>
-      </div>
+            </div>
+            <div>
+          <Button variant="contained" type="submit">Register</Button>
+          </div>
+        </Box>
     );
   }
 }
