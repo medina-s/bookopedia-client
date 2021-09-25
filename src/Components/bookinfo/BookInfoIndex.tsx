@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { Form, FormGroup, Label, Input, Button, Table } from "reactstrap";
 import ReviewIndex from "../review/ReviewIndex";
 
 type BookInfoIndexState = {
@@ -168,13 +168,29 @@ class BookInfoIndex extends React.Component<
           <Button type="submit">Search</Button>
         </Form>
         {<img src={this.state.bookimgurl} alt="" />}
-        {[
-          this.state.bookname,
-          this.state.booksubtitle,
-          this.state.bookauthor,
-          this.state.bookdesc,
-        ]}
-        {[this.state.bookpublisher, this.state.bookpublishdate]}
+        <Table striped>
+            <thead>
+                <tr>
+                    <th>Book Title</th>
+                    <th>Book Subtitle</th>
+                    <th>Book Author</th>
+                    <th>Description</th>
+                    <th>Publisher</th>
+                    <th>Publishing Date</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                    <td>{this.state.bookname}</td>
+                    <td>{this.state.booksubtitle}</td>
+                    <td>{this.state.bookauthor}</td>
+                    <td>{this.state.bookdesc}</td>
+                    <td>{this.state.bookpublisher}</td>
+                    <td>{this.state.bookpublishdate}</td>
+                </tr>
+            </tbody>
+        </Table>
+        
 
         <ReviewIndex
           allreviews={this.state.allreviews}

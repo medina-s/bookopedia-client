@@ -1,7 +1,5 @@
 import React from "react";
-import {
-  Button
-} from "reactstrap";
+import { Button, Table } from "reactstrap";
 import ReviewUpdate from "./ReviewUpdate";
 
 type MyReviewIndexState = {
@@ -93,31 +91,44 @@ class MyReviewIndex extends React.Component<
         My Reviews
         {protectedView ? (
           <>
-            {this.state.allreviews.map((review) => {
-              return (
+            <Table striped>
+              <thead>
                 <tr>
-                  <td>
-                    <li>
-                      {review.booktitle} -- {review.bookauthor} --{" "}
-                      {review.reviewtext} -- {review.rating}
-                      <Button
-                        type="submit"
-                        color="warning"
-                        onClick={() => {
-                          this.toggle(true);
-                        }}
-                      >
-                        Edit Review
-                      </Button>
-                      <Button
-                        type="submit"
-                        color="danger"
-                        onClick={() => {
-                          this.deleteReview(review.id);
-                        }}
-                      >
-                        Delete Review
-                      </Button>
+                  <th>Book Title</th>
+                  <th>Book Author</th>
+                  <th>Review</th>
+                  <th>Rating</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.allreviews.map((review) => {
+                  return (
+                    <tr>
+                      <td>{review.booktitle}</td>
+                      <td>{review.bookauthor}</td>
+                      <td>{review.reviewtext}</td>
+                      <td>{review.rating}</td>
+                      <td>
+                        <Button
+                          type="submit"
+                          color="warning"
+                          onClick={() => {
+                            this.toggle(true);
+                          }}
+                        >
+                          Edit Review
+                        </Button>
+                        <Button
+                          type="submit"
+                          color="danger"
+                          onClick={() => {
+                            this.deleteReview(review.id);
+                          }}
+                        >
+                          Delete Review
+                        </Button>
+                      </td>{" "}
                       {this.state.toggle ? (
                         <ReviewUpdate
                           bookname={review.booktitle}
@@ -132,11 +143,11 @@ class MyReviewIndex extends React.Component<
                       ) : (
                         <></>
                       )}
-                    </li>
-                  </td>
-                </tr>
-              );
-            })}
+                    </tr>
+                  );
+                })}{" "}
+              </tbody>
+            </Table>
           </>
         ) : (
           <></>

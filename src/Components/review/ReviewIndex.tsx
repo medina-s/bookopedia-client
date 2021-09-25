@@ -4,7 +4,8 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  UncontrolledDropdown,
+  UncontrolledDropdown, 
+  Table
 } from "reactstrap";
 import ReadingListIndex from "../readinglist/ReadingListIndex";
 
@@ -168,32 +169,46 @@ class ReviewIndex extends React.Component<ReviewIndexProps, ReviewIndexState> {
               <Button type="submit">Add Review</Button>
             </Form>
             All reviews:
+            <Table striped>
+            <thead>
+                <tr>
+                    <th>Review</th>
+                    <th>Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+            
             {this.props.allreviews.map((review) => {
               return (
                 <tr>
-                  <td>
-                    <li>
-                      {review.reviewtext} -- {review.rating}
-                    </li>
-                  </td>
-                </tr>
+                    <td>{review.reviewtext}</td>
+                    <td>{review.rating}</td>
+            </tr>
               );
             })}
+            </tbody></Table>
           </>
         ) : (
           <>
-            All reviews:
+          All reviews:
+            <Table striped>
+            <thead>
+                <tr>
+                    <th>Review</th>
+                    <th>Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+            
             {this.props.allreviews.map((review) => {
               return (
                 <tr>
-                  <td>
-                    <li>
-                      {review.reviewtext} -- {review.rating}
-                    </li>
-                  </td>
-                </tr>
+                    <td>{review.reviewtext}</td>
+                    <td>{review.rating}</td>
+            </tr>
               );
             })}
+            </tbody></Table>
           </>
         )}
       </div>

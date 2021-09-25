@@ -1,7 +1,5 @@
 import React from "react";
-import {
-  Button
-} from "reactstrap";
+import { Button, Table } from "reactstrap";
 import ReadingListItemUpdate from "./ReadingListItemUpdate";
 
 type MyReadingListState = {
@@ -91,30 +89,42 @@ class MyReadingListIndex extends React.Component<
         My Reading List
         {protectedView ? (
           <>
-            {this.state.allitems.map((item) => {
-              return (
+            <Table striped>
+              <thead>
                 <tr>
-                  <td>
-                    <li>
-                      {item.booktitle} -- {item.bookauthor} --{item.status} --{" "}
-                      <Button
-                        type="submit"
-                        color="warning"
-                        onClick={() => {
-                          this.toggle(true);
-                        }}
-                      >
-                        Edit Status
-                      </Button>
-                      <Button
-                        type="submit"
-                        color="danger"
-                        onClick={() => {
-                          this.deleteItem(item.id);
-                        }}
-                      >
-                        Delete Book
-                      </Button>
+                  <th>Book Title</th>
+                  <th>Book Author</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.allitems.map((item) => {
+                  return (
+                    <tr>
+                      <td>{item.booktitle}</td>
+                      <td>{item.bookauthor}</td>
+                      <td>{item.status}</td>
+                      <td>
+                        <Button
+                          type="submit"
+                          color="warning"
+                          onClick={() => {
+                            this.toggle(true);
+                          }}
+                        >
+                          Edit Status
+                        </Button>
+                        <Button
+                          type="submit"
+                          color="danger"
+                          onClick={() => {
+                            this.deleteItem(item.id);
+                          }}
+                        >
+                          Delete Book
+                        </Button>
+                      </td>{" "}
                       {this.state.toggle ? (
                         <ReadingListItemUpdate
                           bookname={item.booktitle}
@@ -128,11 +138,11 @@ class MyReadingListIndex extends React.Component<
                       ) : (
                         <></>
                       )}
-                    </li>
-                  </td>
-                </tr>
-              );
-            })}
+                    </tr>
+                  );
+                })}{" "}
+              </tbody>
+            </Table>
           </>
         ) : (
           <></>
