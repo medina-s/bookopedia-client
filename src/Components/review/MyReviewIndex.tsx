@@ -7,6 +7,7 @@ type MyReviewIndexState = {
   toggle: boolean;
   updatedreviewtext: string;
   updatedrating: string;
+  indexstate: number
 };
 
 type MyReviewIndexProps = {
@@ -24,6 +25,7 @@ class MyReviewIndex extends React.Component<
       toggle: false,
       updatedreviewtext: "",
       updatedrating: "",
+      indexstate: 0
     };
 
     this.deleteReview = this.deleteReview.bind(this);
@@ -55,8 +57,8 @@ class MyReviewIndex extends React.Component<
     this.fetchAllreviews();
   }
 
-  toggle(val: boolean) {
-    this.setState({ toggle: val });
+  toggle(val: boolean, index: number) {
+    this.setState({ toggle: val, indexstate: index });
   }
 
   async deleteReview(reviewid: string) {
@@ -102,9 +104,9 @@ class MyReviewIndex extends React.Component<
                 </tr>
               </thead>
               <tbody>
-                {this.state.allreviews.map((review) => {
+                {this.state.allreviews.map((review, index) => {
                   return (
-                    <tr>
+                    <tr key="index">
                       <td>{review.booktitle}</td>
                       <td>{review.bookauthor}</td>
                       <td>{review.reviewtext}</td>
@@ -114,7 +116,7 @@ class MyReviewIndex extends React.Component<
                           type="submit"
                           color="warning"
                           onClick={() => {
-                            this.toggle(true);
+                            this.toggle(true, index);
                           }}
                         >
                           Edit Review
@@ -131,11 +133,11 @@ class MyReviewIndex extends React.Component<
                       </td>{" "}
                       {this.state.toggle ? (
                         <ReviewUpdate
-                          bookname={review.booktitle}
-                          bookauthor={review.bookauthor}
-                          reviewtext={review.reviewtext}
-                          rating={review.rating}
-                          reviewid={review.id}
+                          bookname={this.state.allreviews[this.state.indexstate].booktitle}
+                          bookauthor={this.state.allreviews[this.state.indexstate].bookauthor}
+                          reviewtext={this.state.allreviews[this.state.indexstate].reviewtext}
+                          rating={this.state.allreviews[this.state.indexstate].rating}
+                          reviewid={this.state.allreviews[this.state.indexstate].id}
                           toggle={this.toggle}
                           sessionToken={this.props.sessionToken}
                           fetchAllReviews={this.fetchAllreviews}

@@ -22,7 +22,7 @@ type ReviewUpdateProps = {
   reviewtext: string;
   rating: string | null;
   reviewid: string;
-  toggle: (val: boolean) => void;
+  toggle: (val: boolean, index: number) => void;
   sessionToken: string | null;
   fetchAllReviews: () => void;
 };
@@ -66,7 +66,7 @@ class ReviewUpdate extends React.Component<
       .then((logData) => {
         console.log(logData);
         this.props.fetchAllReviews();
-        this.props.toggle(false);
+        this.props.toggle(false, 0);
         alert(logData.message);
       })
       .catch((err) => {

@@ -21,7 +21,7 @@ type ReadingListItemUpdateProps = {
   bookauthor: string;
   status: string | null;
   itemid: string;
-  toggle: (val: boolean) => void;
+  toggle: (val: boolean, index: number) => void;
   sessionToken: string | null;
   fetchAllItems: () => void;
 };
@@ -62,7 +62,7 @@ class ReadingListItemUpdate extends React.Component<
       .then((logData) => {
         console.log(logData);
         this.props.fetchAllItems();
-        this.props.toggle(false);
+        this.props.toggle(false, 0);
         alert(logData.message);
       })
       .catch((err) => {
