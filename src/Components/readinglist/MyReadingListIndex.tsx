@@ -6,6 +6,7 @@ type MyReadingListState = {
   allitems: any[];
   toggle: boolean;
   updatedstatus: string;
+  indexstate: number
 };
 
 type MyReadingListProps = {
@@ -22,6 +23,7 @@ class MyReadingListIndex extends React.Component<
       allitems: [],
       toggle: false,
       updatedstatus: "",
+      indexstate: 0
     };
 
     this.deleteItem = this.deleteItem.bind(this);
@@ -42,6 +44,9 @@ class MyReadingListIndex extends React.Component<
         this.setState({
           allitems: data,
         });
+        console.log(this.state.allitems)
+        console.log(this.state.allitems[0].booktitle)
+
       })
       .catch((err) => {
         console.log("Exception Occurred");
@@ -53,8 +58,8 @@ class MyReadingListIndex extends React.Component<
     this.fetchAllItems();
   }
 
-  toggle(val: boolean) {
-    this.setState({ toggle: val });
+  toggle(val: boolean, index: number) {
+    this.setState({ toggle: val,  indexstate: index});
   }
 
   async deleteItem(itemid: string) {
@@ -99,9 +104,10 @@ class MyReadingListIndex extends React.Component<
                 </tr>
               </thead>
               <tbody>
-                {this.state.allitems.map((item) => {
+                {this.state.allitems.map((item, index) => {
                   return (
-                    <tr>
+                    <tr key={index}>
+                      
                       <td>{item.booktitle}</td>
                       <td>{item.bookauthor}</td>
                       <td>{item.status}</td>
@@ -110,7 +116,7 @@ class MyReadingListIndex extends React.Component<
                           type="submit"
                           color="warning"
                           onClick={() => {
-                            this.toggle(true);
+                            this.toggle(true, index);
                           }}
                         >
                           Edit Status
@@ -126,11 +132,12 @@ class MyReadingListIndex extends React.Component<
                         </Button>
                       </td>
                       {this.state.toggle ? (
+                        
                         <ReadingListItemUpdate
-                          bookname={item.booktitle}
-                          bookauthor={item.bookauthor}
-                          status={item.status}
-                          itemid={item.id}
+                          bookname={this.state.allitems[this.state.indexstate].booktitle}
+                          bookauthor={this.state.allitems[this.state.indexstate].bookauthor}
+                          status={this.state.allitems[this.state.indexstate].status}
+                          itemid={this.state.allitems[this.state.indexstate].id}
                           toggle={this.toggle}
                           sessionToken={this.props.sessionToken}
                           fetchAllItems={this.fetchAllItems}
