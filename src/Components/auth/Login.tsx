@@ -1,9 +1,8 @@
 import React from "react";
-import { MainpageState } from "../../Mainpage";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 
 type LoginProps = {
-  updateToken: (newToken: string) => void;
+  updateToken: (newToken: string, role: string, firstname: string) => void;
 };
 
 type LoginState = {
@@ -21,30 +20,35 @@ class Login extends React.Component<LoginProps, LoginState> {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(e: React.FormEvent) {
+  async handleSubmit(e: React.FormEvent) {
     console.log("HANDLE SUBMIT EVENT");
 
     if (this.state.email === "" || this.state.password === "") {
-     
-      alert("All fields are required!")
-     } else {
-
-    e.preventDefault();
-    fetch("http://localhost:3000/auth/login", {
-      method: "POST",
-      body: JSON.stringify({
-        user: { email: this.state.email, password: this.state.password },
-      }),
-      headers: new Headers({
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        this.props.updateToken(data.sessionToken);
-        console.log(data);
-        //alert(data.message);
-      });
+      alert("All fields are required!");
+    } else {
+      e.preventDefault();
+      await fetch("http://localhost:3000/auth/login", {
+        method: "POST",
+        body: JSON.stringify({
+          user: { email: this.state.email, password: this.state.password },
+        }),
+        headers: new Headers({
+          "Content-Type": "application/json",
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          this.props.updateToken(
+            data.sessionToken,
+            data.user.role,
+            data.user.firstname
+          );
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log("Exception Occurred");
+          console.log(err);
+        });
     }
   }
 

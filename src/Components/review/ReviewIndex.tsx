@@ -1,13 +1,12 @@
 import React from "react";
-import {Alert, Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import {
-  Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
   UncontrolledDropdown,
 } from "reactstrap";
-import ReadingListIndex from '../readinglist/ReadingListIndex'
+import ReadingListIndex from "../readinglist/ReadingListIndex";
 
 type ReviewIndexProps = {
   allreviews: any[];
@@ -39,36 +38,37 @@ class ReviewIndex extends React.Component<ReviewIndexProps, ReviewIndexState> {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(e: React.FormEvent) {
+  async handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (this.state.reviewtext === "" || this.state.rating === null) {
-     
-     alert("Cannot submit empty form!")
+      alert("Cannot submit empty form!");
     } else {
-      fetch(`http://localhost:3000/review/create`, {
-      method: "POST",
-      body: JSON.stringify({
-        review: {
-          booktitle: this.props.bookname,
-          bookauthor: this.props.bookauthor,
-          reviewtext: this.state.reviewtext,
-          rating: this.state.rating,
-        },
-      }),
-      headers: new Headers({
-        "Content-type": "application/json",
-        Authorization: `Bearer ${this.props.sessionToken}`,
-      }),
-    })
-      .then((res) => res.json())
-      .then((logData) => {
-        console.log(logData);
-        this.props.fetchReviewsDB();
-        alert(logData.message);
-      });
+      await fetch(`http://localhost:3000/review/create`, {
+        method: "POST",
+        body: JSON.stringify({
+          review: {
+            booktitle: this.props.bookname,
+            bookauthor: this.props.bookauthor,
+            reviewtext: this.state.reviewtext,
+            rating: this.state.rating,
+          },
+        }),
+        headers: new Headers({
+          "Content-type": "application/json",
+          Authorization: `Bearer ${this.props.sessionToken}`,
+        }),
+      })
+        .then((res) => res.json())
+        .then((logData) => {
+          console.log(logData);
+          this.props.fetchReviewsDB();
+          alert(logData.message);
+        })
+        .catch((err) => {
+          console.log("Exception Occurred");
+          console.log(err);
+        });
     }
-
-    
   }
 
   render() {
@@ -86,7 +86,11 @@ class ReviewIndex extends React.Component<ReviewIndexProps, ReviewIndexState> {
       <div className="ReviewIndex">
         {protectedView ? (
           <>
-          <ReadingListIndex booktitle={this.props.bookname} bookauthor={this.props.bookauthor} sessionToken={this.props.sessionToken} />
+            <ReadingListIndex
+              booktitle={this.props.bookname}
+              bookauthor={this.props.bookauthor}
+              sessionToken={this.props.sessionToken}
+            />
             <Form onSubmit={this.handleSubmit}>
               <FormGroup>
                 <Label htmlFor="review">Review</Label>
@@ -102,25 +106,62 @@ class ReviewIndex extends React.Component<ReviewIndexProps, ReviewIndexState> {
               <FormGroup>
                 <Label htmlFor="rating">Rating</Label>
                 <UncontrolledDropdown>
-                  <DropdownToggle caret><>{this.state.rating}</></DropdownToggle>
-                  <DropdownMenu >
+                  <DropdownToggle caret>
+                    <>{this.state.rating}</>
+                  </DropdownToggle>
+                  <DropdownMenu>
                     <DropdownItem header>Rating</DropdownItem>
-                    
-                    <DropdownItem dropDownValue="1" onClick={(e) => {
-                    this.setState({ rating: e.currentTarget.getAttribute("dropDownValue") })
-                  }}>1</DropdownItem>
-                    <DropdownItem dropDownValue="2" onClick={(e) => {
-                    this.setState({ rating: e.currentTarget.getAttribute("dropDownValue") })
-                  }}>2</DropdownItem>
-                    <DropdownItem dropDownValue="3" onClick={(e) => {
-                    this.setState({ rating: e.currentTarget.getAttribute("dropDownValue") })
-                  }}>3</DropdownItem>
-                    <DropdownItem dropDownValue="4" onClick={(e) => {
-                    this.setState({ rating: e.currentTarget.getAttribute("dropDownValue") })
-                  }}>4</DropdownItem>
-                    <DropdownItem dropDownValue="5" onClick={(e) => {
-                    this.setState({ rating: e.currentTarget.getAttribute("dropDownValue") })
-                  }}>5</DropdownItem>
+
+                    <DropdownItem
+                      dropDownValue="1"
+                      onClick={(e) => {
+                        this.setState({
+                          rating: e.currentTarget.getAttribute("dropDownValue"),
+                        });
+                      }}
+                    >
+                      1
+                    </DropdownItem>
+                    <DropdownItem
+                      dropDownValue="2"
+                      onClick={(e) => {
+                        this.setState({
+                          rating: e.currentTarget.getAttribute("dropDownValue"),
+                        });
+                      }}
+                    >
+                      2
+                    </DropdownItem>
+                    <DropdownItem
+                      dropDownValue="3"
+                      onClick={(e) => {
+                        this.setState({
+                          rating: e.currentTarget.getAttribute("dropDownValue"),
+                        });
+                      }}
+                    >
+                      3
+                    </DropdownItem>
+                    <DropdownItem
+                      dropDownValue="4"
+                      onClick={(e) => {
+                        this.setState({
+                          rating: e.currentTarget.getAttribute("dropDownValue"),
+                        });
+                      }}
+                    >
+                      4
+                    </DropdownItem>
+                    <DropdownItem
+                      dropDownValue="5"
+                      onClick={(e) => {
+                        this.setState({
+                          rating: e.currentTarget.getAttribute("dropDownValue"),
+                        });
+                      }}
+                    >
+                      5
+                    </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </FormGroup>
@@ -141,7 +182,7 @@ class ReviewIndex extends React.Component<ReviewIndexProps, ReviewIndexState> {
           </>
         ) : (
           <>
-          All reviews:
+            All reviews:
             {this.props.allreviews.map((review) => {
               return (
                 <tr>

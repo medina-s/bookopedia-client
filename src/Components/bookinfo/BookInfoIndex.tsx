@@ -44,12 +44,10 @@ class BookInfoIndex extends React.Component<
     this.fetchReviewDB = this.fetchReviewDB.bind(this);
   }
 
-  fetchBooksAPI() {
+  async fetchBooksAPI() {
     console.log("HANDLE fetchBooksAPi EVENT");
 
-    //e.preventDefault();
-
-    fetch(
+    await fetch(
       `https://www.googleapis.com/books/v1/volumes?q=intitle:${this.state.booknameinput}+inauthor:${this.state.bookauthorinput}&filter=partial`,
       {
         method: "GET",
@@ -73,25 +71,21 @@ class BookInfoIndex extends React.Component<
           `http://localhost:3000/review/all/${this.state.bookname}/${this.state.bookauthor}`,
           {
             method: "GET",
-            //body: JSON.stringify({user:{email: this.state.email, password: this.state.password}}),
-            //headers: new Headers({
-            //    'Content-Type': 'application/json'
-            // })
           }
         )
           .then((response) => response.json())
           .then((data) => {
             console.log("ALL DATA!");
-        console.log(data);
+            console.log(data);
             this.setState({
               allreviews: data,
             });
             console.log("ALL REVIEWS");
-        console.log(this.state.allreviews);
+            console.log(this.state.allreviews);
           });
-      }) 
+      })
       .catch((err) => {
-        console.log("Exception Occurred")
+        console.log("Exception Occurred");
         console.log(err);
         this.setState({
           bookname: "Book Not Found!",
@@ -103,33 +97,31 @@ class BookInfoIndex extends React.Component<
           bookpublishdate: "",
           toggle: true,
         });
-
-      })
+      });
   }
 
-  fetchReviewDB() {
+  async fetchReviewDB() {
     console.log("HANDLE fetchDBReview EVENT");
 
-    //e.preventDefault();
-    fetch(
+    await fetch(
       `http://localhost:3000/review/all/${this.state.bookname}/${this.state.bookauthor}`,
       {
         method: "GET",
-        //body: JSON.stringify({user:{email: this.state.email, password: this.state.password}}),
-        //headers: new Headers({
-        //    'Content-Type': 'application/json'
-        // })
       }
     )
       .then((response) => response.json())
       .then((data) => {
         console.log("ALL DATA!");
-    console.log(data);
+        console.log(data);
         this.setState({
           allreviews: data,
         });
         console.log("ALL REVIEWS");
-    console.log(this.state.allreviews);
+        console.log(this.state.allreviews);
+      })
+      .catch((err) => {
+        console.log("Exception Occurred");
+        console.log(err);
       });
     console.log("ALL REVIEWS");
     console.log(this.state.allreviews);
@@ -141,18 +133,17 @@ class BookInfoIndex extends React.Component<
     e.preventDefault();
 
     if (this.state.booknameinput === "" || this.state.bookauthorinput === "") {
-      alert("Cannot submit empty form!")
+      alert("Cannot submit empty form!");
     } else {
       this.fetchBooksAPI();
     }
 
-    //this.fetchReviewDB();
   }
 
   render() {
     return (
       <div className="BookInfoIndex">
-        <h1>BookInfoIndex</h1>
+        <h1>Book Search</h1>
         <Form onSubmit={this.handleSubmit}>
           <FormGroup>
             <Label htmlFor="bookname">Book Name</Label>
@@ -177,15 +168,21 @@ class BookInfoIndex extends React.Component<
           <Button type="submit">Search</Button>
         </Form>
         {<img src={this.state.bookimgurl} alt="" />}
-        {[this.state.bookname, this.state.booksubtitle, this.state.bookauthor, this.state.bookdesc]}
+        {[
+          this.state.bookname,
+          this.state.booksubtitle,
+          this.state.bookauthor,
+          this.state.bookdesc,
+        ]}
         {[this.state.bookpublisher, this.state.bookpublishdate]}
-        
+
         <ReviewIndex
           allreviews={this.state.allreviews}
           toggle={this.state.toggle}
           sessionToken={this.props.sessionToken}
           bookname={this.state.bookname}
-          bookauthor={this.state.bookauthor} fetchReviewsDB={this.fetchReviewDB}
+          bookauthor={this.state.bookauthor}
+          fetchReviewsDB={this.fetchReviewDB}
         />
       </div>
     );

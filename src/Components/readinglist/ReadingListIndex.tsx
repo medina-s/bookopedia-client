@@ -1,28 +1,27 @@
 import React from "react";
-import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { Button } from "reactstrap";
 
 type ReadingListProps = {
-  sessionToken: string | null,
-  booktitle: string,
-  bookauthor: string
+  sessionToken: string | null;
+  booktitle: string;
+  bookauthor: string;
 };
 
-type ReadingListState = {
-  
-};
+type ReadingListState = {};
 
-class ReadingListIndex extends React.Component<ReadingListProps, ReadingListState> {
+class ReadingListIndex extends React.Component<
+  ReadingListProps,
+  ReadingListState
+> {
   constructor(props: ReadingListProps) {
     super(props);
-    this.state = {
-      
-    };
+    this.state = {};
     this.addToReadingList = this.addToReadingList.bind(this);
   }
 
-  addToReadingList(){
-      let defaultbookrating = "To Read"
-    fetch(`http://localhost:3000/readinglist/create`, {
+  async addToReadingList() {
+    let defaultbookrating = "To Read";
+    await fetch(`http://localhost:3000/readinglist/create`, {
       method: "POST",
       body: JSON.stringify({
         rlist: {
@@ -40,17 +39,26 @@ class ReadingListIndex extends React.Component<ReadingListProps, ReadingListStat
       .then((logData) => {
         console.log(logData);
         alert(logData.message);
+      })
+      .catch((err) => {
+        console.log("Exception Occurred");
+        console.log(err);
       });
   }
 
   render() {
-
-    return (<>
-    <Button type="submit" onClick={() => {
-                          this.addToReadingList();
-                        }}>Add to my reading list</Button>
-    </>)
-      
+    return (
+      <>
+        <Button
+          type="submit"
+          onClick={() => {
+            this.addToReadingList();
+          }}
+        >
+          Add to my reading list
+        </Button>
+      </>
+    );
   }
 }
 

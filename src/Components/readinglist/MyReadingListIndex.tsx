@@ -1,13 +1,6 @@
 import React from "react";
 import {
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
+  Button
 } from "reactstrap";
 import ReadingListItemUpdate from "./ReadingListItemUpdate";
 
@@ -22,15 +15,15 @@ type MyReadingListProps = {
 };
 
 class MyReadingListIndex extends React.Component<
-MyReadingListProps,
-MyReadingListState
+  MyReadingListProps,
+  MyReadingListState
 > {
   constructor(props: MyReadingListProps) {
     super(props);
     this.state = {
       allitems: [],
       toggle: false,
-      updatedstatus: ""
+      updatedstatus: "",
     };
 
     this.deleteItem = this.deleteItem.bind(this);
@@ -38,10 +31,9 @@ MyReadingListState
     this.toggle = this.toggle.bind(this);
   }
 
-  fetchAllItems() {
-    fetch(`http://localhost:3000/readinglist/all`, {
+  async fetchAllItems() {
+    await fetch(`http://localhost:3000/readinglist/all`, {
       method: "GET",
-      //body: JSON.stringify({user:{email: this.state.email, password: this.state.password}}),
       headers: new Headers({
         "Content-Type": "application/json",
         Authorization: `Bearer ${this.props.sessionToken}`,
@@ -52,6 +44,10 @@ MyReadingListState
         this.setState({
           allitems: data,
         });
+      })
+      .catch((err) => {
+        console.log("Exception Occurred");
+        console.log(err);
       });
   }
 
@@ -63,10 +59,9 @@ MyReadingListState
     this.setState({ toggle: val });
   }
 
-  deleteItem(itemid: string) {
-    fetch(`http://localhost:3000/readinglist/delete/${itemid}`, {
+  async deleteItem(itemid: string) {
+    await fetch(`http://localhost:3000/readinglist/delete/${itemid}`, {
       method: "DELETE",
-      //body: JSON.stringify({user:{email: this.state.email, password: this.state.password}}),
       headers: new Headers({
         "Content-Type": "application/json",
         Authorization: `Bearer ${this.props.sessionToken}`,
@@ -75,8 +70,13 @@ MyReadingListState
       .then((response) => response.json())
       .then((logData) => {
         console.log(logData);
-      this.fetchAllItems();
-      alert(logData.message);});
+        this.fetchAllItems();
+        alert(logData.message);
+      })
+      .catch((err) => {
+        console.log("Exception Occurred");
+        console.log(err);
+      });
   }
 
   render() {
@@ -88,6 +88,7 @@ MyReadingListState
     }
     return (
       <div>
+        My Reading List
         {protectedView ? (
           <>
             {this.state.allitems.map((item) => {
@@ -95,8 +96,7 @@ MyReadingListState
                 <tr>
                   <td>
                     <li>
-                      {item.booktitle} -- {item.bookauthor} --{item.status} -- {" "}
-                      
+                      {item.booktitle} -- {item.bookauthor} --{item.status} --{" "}
                       <Button
                         type="submit"
                         color="warning"

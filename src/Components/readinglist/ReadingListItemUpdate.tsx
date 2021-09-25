@@ -10,12 +10,11 @@ import {
   ModalBody,
 } from "reactstrap";
 import {
-    Dropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    UncontrolledDropdown,
-  } from "reactstrap";
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  UncontrolledDropdown,
+} from "reactstrap";
 
 type ReadingListItemUpdateProps = {
   bookname: string;
@@ -32,8 +31,8 @@ type ReadingListItemUpdateState = {
 };
 
 class ReadingListItemUpdate extends React.Component<
-ReadingListItemUpdateProps,
-ReadingListItemUpdateState
+  ReadingListItemUpdateProps,
+  ReadingListItemUpdateState
 > {
   constructor(props: ReadingListItemUpdateProps) {
     super(props);
@@ -43,9 +42,9 @@ ReadingListItemUpdateState
     this.editItem = this.editItem.bind(this);
   }
 
-  editItem(e: React.FormEvent) {
+  async editItem(e: React.FormEvent) {
     e.preventDefault();
-    fetch(`http://localhost:3000/readinglist/edit/${this.props.itemid}`, {
+    await fetch(`http://localhost:3000/readinglist/edit/${this.props.itemid}`, {
       method: "PUT",
       body: JSON.stringify({
         rlist: {
@@ -65,6 +64,10 @@ ReadingListItemUpdateState
         this.props.fetchAllItems();
         this.props.toggle(false);
         alert(logData.message);
+      })
+      .catch((err) => {
+        console.log("Exception Occurred");
+        console.log(err);
       });
   }
 
@@ -83,24 +86,47 @@ ReadingListItemUpdateState
               <Input name="bookauthor" value={this.props.bookauthor} disabled />
             </FormGroup>
             <FormGroup>
-                <Label htmlFor="readinglist">Status</Label>
-                <UncontrolledDropdown>
-                  <DropdownToggle caret><>{this.state.status}</></DropdownToggle>
-                  <DropdownMenu >
-                    <DropdownItem header>Status</DropdownItem>
-                    
-                    <DropdownItem dropDownValue="To Read" onClick={(e) => {
-                    this.setState({ status: e.currentTarget.getAttribute("dropDownValue") })
-                  }}>To Read</DropdownItem>
-                    <DropdownItem dropDownValue="Reading" onClick={(e) => {
-                    this.setState({ status: e.currentTarget.getAttribute("dropDownValue") })
-                  }}>Reading</DropdownItem>
-                    <DropdownItem dropDownValue="Completed" onClick={(e) => {
-                    this.setState({ status: e.currentTarget.getAttribute("dropDownValue") })
-                  }}>Completed</DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-              </FormGroup>
+              <Label htmlFor="readinglist">Status</Label>
+              <UncontrolledDropdown>
+                <DropdownToggle caret>
+                  <>{this.state.status}</>
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem header>Status</DropdownItem>
+
+                  <DropdownItem
+                    dropDownValue="To Read"
+                    onClick={(e) => {
+                      this.setState({
+                        status: e.currentTarget.getAttribute("dropDownValue"),
+                      });
+                    }}
+                  >
+                    To Read
+                  </DropdownItem>
+                  <DropdownItem
+                    dropDownValue="Reading"
+                    onClick={(e) => {
+                      this.setState({
+                        status: e.currentTarget.getAttribute("dropDownValue"),
+                      });
+                    }}
+                  >
+                    Reading
+                  </DropdownItem>
+                  <DropdownItem
+                    dropDownValue="Completed"
+                    onClick={(e) => {
+                      this.setState({
+                        status: e.currentTarget.getAttribute("dropDownValue"),
+                      });
+                    }}
+                  >
+                    Completed
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            </FormGroup>
             <Button type="submit">Update Status</Button>
           </Form>
         </ModalBody>

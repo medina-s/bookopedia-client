@@ -1,10 +1,8 @@
 import React from "react";
-import { MainpageState } from "../../Mainpage";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
-import { BrowserRouter } from "react-router-dom";
 
 type RegisterProps = {
-  updateToken: (newToken: string) => void;
+  updateToken: (newToken: string, role: string, firstname: string) => void;
 };
 
 type RegisterState = {
@@ -28,14 +26,20 @@ class Register extends React.Component<RegisterProps, RegisterState> {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(e: React.FormEvent) {
+  async handleSubmit(e: React.FormEvent) {
     console.log("HANDLE SUBMIT EVENT");
 
-    if (this.state.email === "" || this.state.password === "" || this.state.firstname === "" || this.state.lastname === "" || this.state.username === "") {
-     
-      alert("All fields are required!")
-     } else {e.preventDefault();
-      fetch("http://localhost:3000/auth/register", {
+    if (
+      this.state.email === "" ||
+      this.state.password === "" ||
+      this.state.firstname === "" ||
+      this.state.lastname === "" ||
+      this.state.username === ""
+    ) {
+      alert("All fields are required!");
+    } else {
+      e.preventDefault();
+      await fetch("http://localhost:3000/auth/register", {
         method: "POST",
         body: JSON.stringify({
           user: {
@@ -52,14 +56,21 @@ class Register extends React.Component<RegisterProps, RegisterState> {
         }),
       })
         .then((response) => response.json())
-  
+
         .then((data) => {
-          this.props.updateToken(data.sessionToken);
+          this.props.updateToken(
+            data.sessionToken,
+            data.user.role,
+            data.user.firstname
+          );
           console.log(data);
           alert(data.message);
-        });}
-
-    
+        })
+        .catch((err) => {
+          console.log("Exception Occurred");
+          console.log(err);
+        });
+    }
   }
 
   render() {

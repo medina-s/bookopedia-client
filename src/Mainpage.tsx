@@ -6,11 +6,13 @@ import BookInfoIndex from "./Components/bookinfo/BookInfoIndex";
 import MyReviewIndex from "./Components/review/MyReviewIndex";
 import MyReadingListIndex from "./Components/readinglist/MyReadingListIndex";
 import AuthIndex from "./Components/auth/AuthIndex";
+import AllUsersIndex from "./Components/admin/AllUsersIndex";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 export type MainpageState = {
   sessionToken: string | null;
-  //newToken: string | null;
+  role: string | null;
+  firstname: string | null;
 };
 
 type MainpageProps = {};
@@ -20,10 +22,10 @@ class Mainpage extends React.Component<MainpageProps, MainpageState> {
     super(props);
     this.state = {
       sessionToken: "",
-      //newToken: "",
+      role: "",
+      firstname: "",
     };
     this.updateToken = this.updateToken.bind(this);
-    //this.useEffect = this.useEffect.bind(this);
     this.clearToken = this.clearToken.bind(this);
   }
 
@@ -31,31 +33,41 @@ class Mainpage extends React.Component<MainpageProps, MainpageState> {
     if (localStorage.getItem("sessionToken")) {
       this.setState({
         sessionToken: localStorage.getItem("sessionToken"),
+        role: localStorage.getItem("role"),
+        firstname: localStorage.getItem("firstname"),
       });
     }
   }
 
-  updateToken = (newToken: string) => {
+  updateToken = (newToken: string, role: string, firstname: string) => {
     localStorage.setItem("sessionToken", newToken);
+    localStorage.setItem("role", role);
+    localStorage.setItem("firstname", firstname);
     this.setState({
       sessionToken: newToken,
+      role: role,
+      firstname: firstname,
     });
-    //this.useEffect()
     console.log("UPDATE TOKEN!");
     console.log(this.state.sessionToken);
+    console.log(this.state.role);
   };
 
   clearToken = () => {
     localStorage.clear();
     this.setState({
       sessionToken: " ",
-      //newToken: " ",
+      role: null,
+      firstname: " ",
     });
   };
 
   protectedView = () => {
     return this.state.sessionToken === localStorage.getItem("sessionToken") ? (
-      <Homepage sessionToken={this.state.sessionToken} />
+      <Homepage
+        sessionToken={this.state.sessionToken}
+        firstname={this.state.firstname}
+      />
     ) : (
       <AuthIndex updateToken={this.updateToken} />
     );
@@ -69,6 +81,7 @@ class Mainpage extends React.Component<MainpageProps, MainpageState> {
             <Sitebar
               sessionToken={this.state.sessionToken}
               clearToken={this.clearToken}
+              role={this.state.role}
             />
 
             <Switch>
@@ -82,7 +95,10 @@ class Mainpage extends React.Component<MainpageProps, MainpageState> {
                 <MyReviewIndex sessionToken={this.state.sessionToken} />
               </Route>
               <Route exact path="/myreadinglist">
-                <MyReadingListIndex sessionToken={this.state.sessionToken}/>
+                <MyReadingListIndex sessionToken={this.state.sessionToken} />
+              </Route>
+              <Route exact path="/allusers">
+                <AllUsersIndex sessionToken={this.state.sessionToken} />
               </Route>
             </Switch>
           </Router>

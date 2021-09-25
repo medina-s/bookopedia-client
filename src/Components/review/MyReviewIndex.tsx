@@ -1,13 +1,6 @@
 import React from "react";
 import {
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
+  Button
 } from "reactstrap";
 import ReviewUpdate from "./ReviewUpdate";
 
@@ -40,10 +33,9 @@ class MyReviewIndex extends React.Component<
     this.toggle = this.toggle.bind(this);
   }
 
-  fetchAllreviews() {
-    fetch(`http://localhost:3000/review/u/all`, {
+  async fetchAllreviews() {
+    await fetch(`http://localhost:3000/review/u/all`, {
       method: "GET",
-      //body: JSON.stringify({user:{email: this.state.email, password: this.state.password}}),
       headers: new Headers({
         "Content-Type": "application/json",
         Authorization: `Bearer ${this.props.sessionToken}`,
@@ -54,6 +46,10 @@ class MyReviewIndex extends React.Component<
         this.setState({
           allreviews: data,
         });
+      })
+      .catch((err) => {
+        console.log("Exception Occurred");
+        console.log(err);
       });
   }
 
@@ -65,10 +61,9 @@ class MyReviewIndex extends React.Component<
     this.setState({ toggle: val });
   }
 
-  deleteReview(reviewid: string) {
-    fetch(`http://localhost:3000/review/delete/${reviewid}`, {
+  async deleteReview(reviewid: string) {
+    await fetch(`http://localhost:3000/review/delete/${reviewid}`, {
       method: "DELETE",
-      //body: JSON.stringify({user:{email: this.state.email, password: this.state.password}}),
       headers: new Headers({
         "Content-Type": "application/json",
         Authorization: `Bearer ${this.props.sessionToken}`,
@@ -77,8 +72,13 @@ class MyReviewIndex extends React.Component<
       .then((response) => response.json())
       .then((logData) => {
         console.log(logData);
-      this.fetchAllreviews();
-      alert(logData.message);});
+        this.fetchAllreviews();
+        alert(logData.message);
+      })
+      .catch((err) => {
+        console.log("Exception Occurred");
+        console.log(err);
+      });
   }
 
   render() {
@@ -90,6 +90,7 @@ class MyReviewIndex extends React.Component<
     }
     return (
       <div>
+        My Reviews
         {protectedView ? (
           <>
             {this.state.allreviews.map((review) => {
