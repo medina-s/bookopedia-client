@@ -1,7 +1,5 @@
 import React from "react";
-import {
-  Button, Table
-} from "reactstrap";
+import { Button, Table } from "reactstrap";
 
 type AllUsersIndexProps = {
   sessionToken: string | null;
@@ -80,7 +78,7 @@ class AllUsersIndex extends React.Component<
       <div>
         {protectedView ? (
           <>
-          <Table striped>
+            <Table striped>
               <thead>
                 <tr>
                   <th>User ID</th>
@@ -91,30 +89,29 @@ class AllUsersIndex extends React.Component<
                 </tr>
               </thead>
               <tbody>
-            {this.state.allusers.map((user) => {
-              return (
-                <tr>
+                {this.state.allusers.map((user) => {
+                  return (
+                    <tr>
                       <td>{user.id}</td>
                       <td>{user.username}</td>
                       <td>{user.firstname}</td>
                       <td>{user.lastname}</td>
                       <td>
-                        
                         <Button
-                        type="submit"
-                        color="danger"
-                        onClick={() => {
-                          this.deleteUser(user.id);
-                        }}
-                      >
-                        Delete User
-                      </Button>
+                          type="submit"
+                          color="danger"
+                          onClick={() => {
+                            this.deleteUser(user.id);
+                          }}
+                        >
+                          Delete User
+                        </Button>
                       </td>
-                      </tr>
-
-                
-              );
-            })}</tbody> </Table>
+                    </tr>
+                  );
+                })}
+              </tbody>{" "}
+            </Table>
           </>
         ) : (
           <></>
