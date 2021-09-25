@@ -190,7 +190,6 @@ class ReviewIndex extends React.Component<ReviewIndexProps, ReviewIndexState> {
           </>
         ) : (
           <>
-          All reviews:
             <Table striped>
             <thead>
                 <tr>

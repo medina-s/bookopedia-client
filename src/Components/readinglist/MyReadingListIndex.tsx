@@ -124,7 +124,7 @@ class MyReadingListIndex extends React.Component<
                         >
                           Delete Book
                         </Button>
-                      </td>{" "}
+                      </td>
                       {this.state.toggle ? (
                         <ReadingListItemUpdate
                           bookname={item.booktitle}

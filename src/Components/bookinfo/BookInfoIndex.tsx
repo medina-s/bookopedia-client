@@ -137,7 +137,6 @@ class BookInfoIndex extends React.Component<
     } else {
       this.fetchBooksAPI();
     }
-
   }
 
   render() {
@@ -169,28 +168,27 @@ class BookInfoIndex extends React.Component<
         </Form>
         {<img src={this.state.bookimgurl} alt="" />}
         <Table striped>
-            <thead>
-                <tr>
-                    <th>Book Title</th>
-                    <th>Book Subtitle</th>
-                    <th>Book Author</th>
-                    <th>Description</th>
-                    <th>Publisher</th>
-                    <th>Publishing Date</th>
-                </tr>
-            </thead>
-            <tbody>
+          <thead>
             <tr>
-                    <td>{this.state.bookname}</td>
-                    <td>{this.state.booksubtitle}</td>
-                    <td>{this.state.bookauthor}</td>
-                    <td>{this.state.bookdesc}</td>
-                    <td>{this.state.bookpublisher}</td>
-                    <td>{this.state.bookpublishdate}</td>
-                </tr>
-            </tbody>
+              <th>Book Title</th>
+              <th>Book Subtitle</th>
+              <th>Book Author</th>
+              <th>Description</th>
+              <th>Publisher</th>
+              <th>Publishing Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{this.state.bookname}</td>
+              <td>{this.state.booksubtitle}</td>
+              <td>{this.state.bookauthor}</td>
+              <td>{this.state.bookdesc}</td>
+              <td>{this.state.bookpublisher}</td>
+              <td>{this.state.bookpublishdate}</td>
+            </tr>
+          </tbody>
         </Table>
-        
 
         <ReviewIndex
           allreviews={this.state.allreviews}

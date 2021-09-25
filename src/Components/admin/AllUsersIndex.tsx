@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Button
+  Button, Table
 } from "reactstrap";
 
 type AllUsersIndexProps = {
@@ -80,14 +80,27 @@ class AllUsersIndex extends React.Component<
       <div>
         {protectedView ? (
           <>
+          <Table striped>
+              <thead>
+                <tr>
+                  <th>User ID</th>
+                  <th>Username</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
             {this.state.allusers.map((user) => {
               return (
                 <tr>
-                  <td>
-                    <li>
-                      {user.id} -- {user.username} --{user.firstname} --{" "}
-                      {user.lastname} --{" "}
-                      <Button
+                      <td>{user.id}</td>
+                      <td>{user.username}</td>
+                      <td>{user.firstname}</td>
+                      <td>{user.lastname}</td>
+                      <td>
+                        
+                        <Button
                         type="submit"
                         color="danger"
                         onClick={() => {
@@ -96,11 +109,12 @@ class AllUsersIndex extends React.Component<
                       >
                         Delete User
                       </Button>
-                    </li>
-                  </td>
-                </tr>
+                      </td>
+                      </tr>
+
+                
               );
-            })}
+            })}</tbody> </Table>
           </>
         ) : (
           <></>
