@@ -1,5 +1,14 @@
 import React from "react";
-import { Button, Table } from "reactstrap";
+
+import Button from '@mui/material/Button'
+
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 type AllUsersIndexProps = {
   sessionToken: string | null;
@@ -78,40 +87,47 @@ class AllUsersIndex extends React.Component<
       <div>
         {protectedView ? (
           <>
-            <Table striped>
-              <thead>
-                <tr>
-                  <th>User ID</th>
-                  <th>Username</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
+          <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>User ID</TableCell>
+              <TableCell>Username</TableCell>
+              <TableCell>E-mail</TableCell>
+              <TableCell>First Name</TableCell>
+              <TableCell>Last Name</TableCell>
+              <TableCell></TableCell>
+              
+            </TableRow>
+          </TableHead>
+          <TableBody>
+
+              
                 {this.state.allusers.map((user) => {
                   return (
-                    <tr>
-                      <td>{user.id}</td>
-                      <td>{user.username}</td>
-                      <td>{user.firstname}</td>
-                      <td>{user.lastname}</td>
-                      <td>
-                        <Button
+                    <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+               
+                <TableCell>{user.id}</TableCell>
+                <TableCell>{user.username}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.firstname}</TableCell>
+                <TableCell>{user.lastname}</TableCell>
+                <TableCell><Button variant='outlined'
                           type="submit"
-                          color="danger"
+                          color="error"
                           onClick={() => {
                             this.deleteUser(user.id);
                           }}
-                        >
-                          Delete User
+                        >Delete User
                         </Button>
-                      </td>
-                    </tr>
+                        </TableCell>
+                    
+                    </TableRow>
                   );
                 })}
-              </tbody>{" "}
-            </Table>
+              </TableBody>
+            </Table></TableContainer>
           </>
         ) : (
           <></>

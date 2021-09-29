@@ -4,8 +4,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  UncontrolledDropdown, 
-  Table
+  UncontrolledDropdown
 } from "reactstrap";
 import ReadingListIndex from "../readinglist/ReadingListIndex";
 import Button from '@mui/material/Button'
@@ -15,6 +14,14 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 
 
@@ -142,45 +149,55 @@ class ReviewIndex extends React.Component<ReviewIndexProps, ReviewIndexState> {
               </div>
             </Box>
             All reviews:
-            <Table striped>
-            <thead>
-                <tr>
-                    <th>Review</th>
-                    <th>Rating</th>
-                </tr>
-            </thead>
-            <tbody>
+            <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Review</TableCell>
+            <TableCell>Rating</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
             
             {this.props.allreviews.map((review) => {
               return (
-                <tr>
-                    <td>{review.reviewtext}</td>
-                    <td>{review.rating}</td>
-            </tr>
+                <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {review.reviewtext}
+              </TableCell>
+              <TableCell>{review.rating}</TableCell>
+                   
+            </TableRow>
               );
             })}
-            </tbody></Table>
+            </TableBody></Table> </TableContainer>
           </>
         ) : (
           <>
-            <Table striped>
-            <thead>
-                <tr>
-                    <th>Review</th>
-                    <th>Rating</th>
-                </tr>
-            </thead>
-            <tbody>
+            <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Review</TableCell>
+            <TableCell>Rating</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
             
             {this.props.allreviews.map((review) => {
               return (
-                <tr>
-                    <td>{review.reviewtext}</td>
-                    <td>{review.rating}</td>
-            </tr>
+                <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {review.reviewtext}
+              </TableCell>
+              <TableCell>{review.rating}</TableCell>
+                   
+            </TableRow>
               );
             })}
-            </tbody></Table>
+            </TableBody></Table> </TableContainer>
           </>
         )}
       </div>

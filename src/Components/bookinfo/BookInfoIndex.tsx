@@ -1,9 +1,17 @@
 import React from "react";
-import { Form, FormGroup, Label, Input, Table } from "reactstrap";
+import { Form, FormGroup, Label, Input } from "reactstrap";
 import ReviewIndex from "../review/ReviewIndex";
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 type BookInfoIndexState = {
   booknameinput: string;
@@ -169,38 +177,50 @@ class BookInfoIndex extends React.Component<
           <Button variant="contained" type="submit">Search</Button>
           </div>
         </Box>
-        {<img src={this.state.bookimgurl} alt="" />}
-        <Table striped>
-          <thead>
-            <tr>
-              <th>Book Title</th>
-              <th>Book Subtitle</th>
-              <th>Book Author</th>
-              <th>Description</th>
-              <th>Publisher</th>
-              <th>Publishing Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{this.state.bookname}</td>
-              <td>{this.state.booksubtitle}</td>
-              <td>{this.state.bookauthor}</td>
-              <td>{this.state.bookdesc}</td>
-              <td>{this.state.bookpublisher}</td>
-              <td>{this.state.bookpublishdate}</td>
-            </tr>
-          </tbody>
-        </Table>
-
-        <ReviewIndex
-          allreviews={this.state.allreviews}
-          toggle={this.state.toggle}
-          sessionToken={this.props.sessionToken}
-          bookname={this.state.bookname}
-          bookauthor={this.state.bookauthor}
-          fetchReviewsDB={this.fetchReviewDB}
-        />
+        
+        {this.state.toggle ? (
+          <>
+          {<img src={this.state.bookimgurl} alt="" />}
+          <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Book Title</TableCell>
+              <TableCell>Book Subtitle</TableCell>
+              <TableCell>Book Author</TableCell>
+              <TableCell>Description</TableCell>
+              <TableCell>Publisher</TableCell>
+              <TableCell>Publishing Date</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+          <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell>
+                  {this.state.bookname}
+                </TableCell>
+                <TableCell>{this.state.booksubtitle}</TableCell>
+                <TableCell>{this.state.bookauthor}</TableCell>
+                <TableCell>{this.state.bookdesc}</TableCell>
+                <TableCell>{this.state.bookpublisher}</TableCell>
+                <TableCell>{this.state.bookpublishdate}</TableCell>
+                     
+              </TableRow>
+            </TableBody>
+          </Table></TableContainer>
+  
+          <ReviewIndex
+            allreviews={this.state.allreviews}
+            toggle={this.state.toggle}
+            sessionToken={this.props.sessionToken}
+            bookname={this.state.bookname}
+            bookauthor={this.state.bookauthor}
+            fetchReviewsDB={this.fetchReviewDB}
+          />
+          </>
+        ) : (<></>)}
+        
+        
       </div>
     );
   }

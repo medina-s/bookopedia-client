@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, NavbarBrand, Nav, NavItem, Button } from "reactstrap";
+import { Collapse, NavbarToggler, Navbar, NavbarBrand, Nav, NavItem } from "reactstrap";
 import { Link } from "react-router-dom";
 
 type AuthIndexProps = {
@@ -8,7 +8,24 @@ type AuthIndexProps = {
   role: string | null;
 };
 
-class Sitebar extends React.Component<AuthIndexProps, {}> {
+type AuthIndexState = {
+  collapsed: boolean
+}
+class Sitebar extends React.Component<AuthIndexProps, AuthIndexState> {
+  constructor(props: AuthIndexProps) {
+    super(props);
+    this.state = {
+      collapsed: true,
+    };
+    this.toggleNavBar = this.toggleNavBar.bind(this);
+  }
+
+  //const toggleNavbar = () => setCollapsed(!collapsed);
+
+  toggleNavBar(){
+    this.setState({collapsed: !this.state.collapsed})
+  }
+
   render() {
     let protectedView;
     let adminview;
@@ -24,11 +41,13 @@ class Sitebar extends React.Component<AuthIndexProps, {}> {
     }
 
     return (
-      <div>
+      <div >
         {protectedView ? (
-          <Navbar color="dark" dark expand="md">
-            <NavbarBrand href="/">Home</NavbarBrand>
-            <Nav className="ml-auto">
+          <Navbar color="dark" dark expand="sm md">
+            <NavbarBrand style={{color: '#fc766aff'}} href="/">Home</NavbarBrand>
+            <NavbarToggler onClick={this.toggleNavBar} className="mr-2" />
+        <Collapse isOpen={!this.state.collapsed} navbar>
+            <Nav navbar className="ml-auto">
               <NavItem>
                 <Link to="/bookinfo" className="site-link">
                   Book Information
@@ -54,15 +73,17 @@ class Sitebar extends React.Component<AuthIndexProps, {}> {
               ) : (
                 <></>
               )}
-              <NavItem>
-                <Button onClick={this.props.clearToken}>Logout</Button>
+              <NavItem >
+                <Link style={{color: '#fc766aff'}} to="#" className="site-link" onClick={this.props.clearToken}>Logout</Link>
               </NavItem>
             </Nav>
+            </Collapse>
           </Navbar>
         ) : (
           <Navbar color="dark" dark expand="md">
             <NavbarBrand href="/">Home</NavbarBrand>
-            <Nav className="ml-auto">
+            
+            <Nav navbar className="ml-auto">
               <NavItem>
                 <Link to="/bookinfo" className="site-link">
                   Book Information
