@@ -123,7 +123,7 @@ class MyReviewIndex extends React.Component<
                 {review.booktitle}
               </TableCell>
               <TableCell>{review.bookauthor}</TableCell>
-              <TableCell>{review.review}</TableCell>
+              <TableCell>{review.reviewtext}</TableCell>
               <TableCell>{review.rating}</TableCell>
                       
                       <TableCell>

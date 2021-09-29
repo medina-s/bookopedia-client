@@ -1,7 +1,6 @@
 import React from "react";
 import Login from "./Login";
 import Register from "./Register";
-import Box from '@mui/material/Box';
 
 
 type AuthIndexProps = {
