@@ -7,7 +7,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button'
+import Button from '@mui/material/Button';
+import APIURL from '../../helpers/environment';
+
 
 
 type MyReadingListState = {
@@ -40,7 +42,7 @@ class MyReadingListIndex extends React.Component<
   }
 
   async fetchAllItems() {
-    await fetch(`http://localhost:3000/readinglist/all`, {
+    await fetch(`${APIURL}/readinglist/all`, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -71,7 +73,7 @@ class MyReadingListIndex extends React.Component<
   }
 
   async deleteItem(itemid: string) {
-    await fetch(`http://localhost:3000/readinglist/delete/${itemid}`, {
+    await fetch(`${APIURL}/readinglist/delete/${itemid}`, {
       method: "DELETE",
       headers: new Headers({
         "Content-Type": "application/json",

@@ -5,13 +5,16 @@ import {
   ModalBody,
 } from "reactstrap";
 
-import Button from '@mui/material/Button'
+import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+
+import APIURL from '../../helpers/environment';
+
 
 type ReadingListItemUpdateProps = {
   bookname: string;
@@ -41,7 +44,7 @@ class ReadingListItemUpdate extends React.Component<
 
   async editItem(e: React.FormEvent) {
     e.preventDefault();
-    await fetch(`http://localhost:3000/readinglist/edit/${this.props.itemid}`, {
+    await fetch(`${APIURL}/readinglist/edit/${this.props.itemid}`, {
       method: "PUT",
       body: JSON.stringify({
         rlist: {

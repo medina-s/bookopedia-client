@@ -1,8 +1,9 @@
 import React from "react";
-import { Form, FormGroup, Label, Input } from "reactstrap";
-import Button from '@mui/material/Button'
+import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import APIURL from '../../helpers/environment';
+
 
 type LoginProps = {
   updateToken: (newToken: string, role: string, firstname: string) => void;
@@ -30,7 +31,7 @@ class Login extends React.Component<LoginProps, LoginState> {
       alert("All fields are required!");
     } else {
       e.preventDefault();
-      await fetch("http://localhost:3000/auth/login", {
+      await fetch(`${APIURL}/auth/login`, {
         method: "POST",
         body: JSON.stringify({
           user: { email: this.state.email, password: this.state.password },

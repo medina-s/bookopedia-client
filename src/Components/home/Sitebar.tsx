@@ -20,8 +20,6 @@ class Sitebar extends React.Component<AuthIndexProps, AuthIndexState> {
     this.toggleNavBar = this.toggleNavBar.bind(this);
   }
 
-  //const toggleNavbar = () => setCollapsed(!collapsed);
-
   toggleNavBar(){
     this.setState({collapsed: !this.state.collapsed})
   }

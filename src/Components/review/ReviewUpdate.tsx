@@ -5,13 +5,16 @@ import {
   ModalBody,
 } from "reactstrap";
 
-import Button from '@mui/material/Button'
+import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+
+import APIURL from '../../helpers/environment';
+
 
 type ReviewUpdateProps = {
   bookname: string;
@@ -44,7 +47,7 @@ class ReviewUpdate extends React.Component<
 
   async editReview(e: React.FormEvent) {
     e.preventDefault();
-    await fetch(`http://localhost:3000/review/edit/${this.props.reviewid}`, {
+    await fetch(`${APIURL}/review/edit/${this.props.reviewid}`, {
       method: "PUT",
       body: JSON.stringify({
         review: {

@@ -1,6 +1,6 @@
 import React from "react";
 import ReviewIndex from "../review/ReviewIndex";
-import Button from '@mui/material/Button'
+import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
@@ -11,6 +11,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import APIURL from '../../helpers/environment';
+
 
 type BookInfoIndexState = {
   booknameinput: string;
@@ -78,7 +80,7 @@ class BookInfoIndex extends React.Component<
       })
       .then((res) => {
         fetch(
-          `http://localhost:3000/review/all/${this.state.bookname}/${this.state.bookauthor}`,
+          `${APIURL}/review/all/${this.state.bookname}/${this.state.bookauthor}`,
           {
             method: "GET",
           }
@@ -114,7 +116,7 @@ class BookInfoIndex extends React.Component<
     console.log("HANDLE fetchDBReview EVENT");
 
     await fetch(
-      `http://localhost:3000/review/all/${this.state.bookname}/${this.state.bookauthor}`,
+      `${APIURL}/review/all/${this.state.bookname}/${this.state.bookauthor}`,
       {
         method: "GET",
       }

@@ -1,7 +1,8 @@
 import React from "react";
-import Button from '@mui/material/Button'
+import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import APIURL from '../../helpers/environment';
 
 
 type RegisterProps = {
@@ -42,7 +43,7 @@ class Register extends React.Component<RegisterProps, RegisterState> {
       alert("All fields are required!");
     } else {
       e.preventDefault();
-      await fetch("http://localhost:3000/auth/register", {
+      await fetch(`${APIURL}/auth/register`, {
         method: "POST",
         body: JSON.stringify({
           user: {

@@ -1,6 +1,7 @@
 import React from "react";
-import Button from '@mui/material/Button'
+import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import APIURL from '../../helpers/environment';
 
 
 type ReadingListProps = {
@@ -23,7 +24,7 @@ class ReadingListIndex extends React.Component<
 
   async addToReadingList() {
     let defaultbookrating = "To Read";
-    await fetch(`http://localhost:3000/readinglist/create`, {
+    await fetch(`${APIURL}/readinglist/create`, {
       method: "POST",
       body: JSON.stringify({
         rlist: {

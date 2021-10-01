@@ -7,7 +7,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button'
+import Button from '@mui/material/Button';
+
+import APIURL from '../../helpers/environment';
+
 
 type MyReviewIndexState = {
   allreviews: any[];
@@ -41,7 +44,7 @@ class MyReviewIndex extends React.Component<
   }
 
   async fetchAllreviews() {
-    await fetch(`http://localhost:3000/review/u/all`, {
+    await fetch(`${APIURL}/review/u/all`, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -69,7 +72,7 @@ class MyReviewIndex extends React.Component<
   }
 
   async deleteReview(reviewid: string) {
-    await fetch(`http://localhost:3000/review/delete/${reviewid}`, {
+    await fetch(`${APIURL}/review/delete/${reviewid}`, {
       method: "DELETE",
       headers: new Headers({
         "Content-Type": "application/json",

@@ -10,6 +10,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+import APIURL from '../../helpers/environment'
+
 type AllUsersIndexProps = {
   sessionToken: string | null;
 };
@@ -33,7 +35,7 @@ class AllUsersIndex extends React.Component<
   }
 
   async fetchAllUsers() {
-    await fetch(`http://localhost:3000/auth/u/all`, {
+    await fetch(`${APIURL}/auth/u/all`, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -57,7 +59,7 @@ class AllUsersIndex extends React.Component<
   }
 
   async deleteUser(userid: string) {
-    await fetch(`http://localhost:3000/auth/delete/u/${userid}`, {
+    await fetch(`${APIURL}/auth/delete/u/${userid}`, {
       method: "DELETE",
       headers: new Headers({
         "Content-Type": "application/json",

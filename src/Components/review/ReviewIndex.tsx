@@ -7,7 +7,7 @@ import {
   UncontrolledDropdown
 } from "reactstrap";
 import ReadingListIndex from "../readinglist/ReadingListIndex";
-import Button from '@mui/material/Button'
+import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
@@ -22,6 +22,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+
+import APIURL from '../../helpers/environment';
+
 
 
 
@@ -60,7 +63,7 @@ class ReviewIndex extends React.Component<ReviewIndexProps, ReviewIndexState> {
     if (this.state.reviewtext === "" || this.state.rating === null) {
       alert("Cannot submit empty form!");
     } else {
-      await fetch(`http://localhost:3000/review/create`, {
+      await fetch(`${APIURL}/review/create`, {
         method: "POST",
         body: JSON.stringify({
           review: {
